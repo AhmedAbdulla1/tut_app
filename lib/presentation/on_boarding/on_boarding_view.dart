@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:tut_app/presentation/resources/color_manager.dart';
 
-class OnBordingView extends StatefulWidget {
-  const OnBordingView({Key? key}) : super(key: key);
+class OnBoardingView extends StatefulWidget {
+  const OnBoardingView({Key? key}) : super(key: key);
 
   @override
-  State<OnBordingView> createState() => _OnBordingViewState();
+  State<OnBoardingView> createState() => _OnBoardingViewState();
 }
 
-class _OnBordingViewState extends State<OnBordingView> {
+class _OnBoardingViewState extends State<OnBoardingView> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      backgroundColor: ColorManager.darkGrey,
+    );
   }
 }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class SplashView extends StatefulWidget {
-  const SplashView({Key? key}) : super(key: key);
+class ForgetPasswordView extends StatefulWidget {
+  const ForgetPasswordView({Key? key}) : super(key: key);
 
   @override
-  State<SplashView> createState() => _SplashViewState();
+  State<ForgetPasswordView> createState() => _ForgetPasswordViewState();
 }
 
-class _SplashViewState extends State<SplashView> {
+class _ForgetPasswordViewState extends State<ForgetPasswordView> {
   @override
   Widget build(BuildContext context) {
     return Container();
