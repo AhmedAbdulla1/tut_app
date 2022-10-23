@@ -4,6 +4,7 @@ import 'package:tut_app/presentation/home/home_view.dart';
 import 'package:tut_app/presentation/login/login_view.dart';
 import 'package:tut_app/presentation/on_boarding/on_boarding_view.dart';
 import 'package:tut_app/presentation/register/register_view.dart';
+import 'package:tut_app/presentation/resources/string_manager.dart';
 import 'package:tut_app/presentation/setting/setting_view.dart';
 import 'package:tut_app/presentation/splash/splash_view.dart';
 import 'package:tut_app/presentation/store_details/store_details_view.dart';
@@ -47,9 +48,15 @@ class RouteGenerator {
     return MaterialPageRoute(
       builder: (_) => Scaffold(
         appBar: AppBar(
-          title: const Text(''),
+          title: const Text(
+            AppStrings.noRouteFound,
+          ),
         ),
-        body: const Center(child: Text('')),
+        body: const Center(
+          child: Text(
+            AppStrings.noRouteFound,
+          ),
+        ),
       ),
     );
   }
