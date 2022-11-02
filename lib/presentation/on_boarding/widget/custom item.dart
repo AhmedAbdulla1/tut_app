@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tut_app/presentation/resources/values_manager.dart';
 
 class CustomView extends StatelessWidget {
   const CustomView({
@@ -13,25 +15,32 @@ class CustomView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(10),
-          child: Text(
-            title,
-            style:Theme.of(context).textTheme.headlineMedium
+    return Padding(
+      padding: const EdgeInsets.all(AppPadding.p20),
+      child: Column(
+        children: [
+          const SizedBox(
+            height: AppSize.s50,
           ),
-        ),
-        Text(
-          subTitle,
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-        Image.asset(
-          image,
-          height: 230,
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.all(AppPadding.p16),
+            child:
+                Text(title, style: Theme.of(context).textTheme.headlineMedium),
+          ),
+          Text(
+            subTitle,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+          const SizedBox(
+            height: AppSize.s50*2,
+          ),
+          SvgPicture.asset(
+            image,
+            height: AppSize.s300,
+          ),
+        ],
+      ),
     );
   }
 }

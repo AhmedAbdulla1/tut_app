@@ -1,4 +1,3 @@
-
 import 'package:tut_app/presentation/resources/values_manager.dart';
 
 import 'custom page view.dart';
@@ -16,6 +15,7 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
 
   @override
   void initState() {
+    super.initState();
     _pageController = PageController(
       initialPage: 0,
     )..addListener(() {
@@ -26,37 +26,39 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
   @override
   Widget build(BuildContext context) {
     //SizeConfig().init(context);
-    return Stack(
+    return Column(
       children: [
+
         CustomPageView(
           pageController: _pageController,
         ),
-        Visibility(
-          visible: _pageController!.hasClients && _pageController!.page! >= 1.5
-              ? false
-              : true,
-          child: Positioned(
-            top: AppPadding.p14,
-            right: 32,
-            child: TextButton(
-              onPressed: () {
-                  //
-                  // () => const LoginScreen(),
-                  // transition: Transition.rightToLeftWithFade,
-                  // duration: const Duration(milliseconds: 400),
-              },
-              child: const Text(
-                'skip>>',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontFamily: 'Poppins',
-                  color: Color(0xff898989),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-        ),
+
+        // Visibility(
+        //   visible: _pageController!.hasClients && _pageController!.page! >= 1.5
+        //       ? false
+        //       : true,
+        //   child: Positioned(
+        //     top: AppPadding.p14,
+        //     right: 32,
+        //     child: TextButton(
+        //       onPressed: () {
+        //           //
+        //           // () => const LoginScreen(),
+        //           // transition: Transition.rightToLeftWithFade,
+        //           // duration: const Duration(milliseconds: 400),
+        //       },
+        //       child: const Text(
+        //         'skip>>',
+        //         style: TextStyle(
+        //           fontSize: 14,
+        //           fontFamily: 'Poppins',
+        //           color: Color(0xff898989),
+        //           fontWeight: FontWeight.bold,
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
         // Positioned(
         //   left: SizeConfig.defaultSize! * 10,
         //   right: SizeConfig.defaultSize! * 10,

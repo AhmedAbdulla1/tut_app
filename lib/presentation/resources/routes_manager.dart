@@ -24,21 +24,21 @@ class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.splashScreen:
-        return MaterialPageRoute(builder: (_) => SplashView());
+        return MaterialPageRoute(builder: (_) => const SplashView());
       case Routes.onBoardingScreen:
-        return MaterialPageRoute(builder: (_) => OnBoardingView());
+        return MaterialPageRoute(builder: (_) => const OnBoardingView());
       case Routes.loginScreen:
-        return MaterialPageRoute(builder: (_) => LogInView());
+        return MaterialPageRoute(builder: (_) => const LogInView());
       case Routes.registerScreen:
-        return MaterialPageRoute(builder: (_) => RegisterView());
+        return MaterialPageRoute(builder: (_) => const RegisterView());
       case Routes.forgetPasswordScreen:
-        return MaterialPageRoute(builder: (_) => ForgetPasswordView());
+        return MaterialPageRoute(builder: (_) => const ForgetPasswordView());
       case Routes.mainScreen:
-        return MaterialPageRoute(builder: (_) => HomeView());
+        return MaterialPageRoute(builder: (_) => const HomeView());
       case Routes.settingScreen:
-        return MaterialPageRoute(builder: (_) => SettingView());
+        return MaterialPageRoute(builder: (_) => const SettingView());
       case Routes.storeDetailsScreen:
-        return MaterialPageRoute(builder: (_) => StoreDetailsView());
+        return MaterialPageRoute(builder: (_) => const StoreDetailsView());
       default:
         return unDefinedRoute();
     }

@@ -59,10 +59,10 @@ ThemeData getApplicationTheme() {
       ),
       headlineLarge: getSemiBoldStyle(
         color: ColorManager.darkGrey,
-        fontSize: FontSize.s16,
+        fontSize: FontSize.s17,
       ),
       headlineMedium:
-          getMediumStyle(color: ColorManager.lightGrey, fontSize: FontSize.s14),
+          getMediumStyle(color: ColorManager.lightGrey, fontSize: FontSize.s15),
       bodyLarge: getRegularStyle(
         color: ColorManager.grey1,
       ),
