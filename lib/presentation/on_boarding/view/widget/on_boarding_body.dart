@@ -26,7 +26,7 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
   @override
   Widget build(BuildContext context) {
     //SizeConfig().init(context);
-    return Column(
+    return Stack(
       children: [
 
         CustomPageView(

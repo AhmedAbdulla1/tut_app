@@ -26,6 +26,11 @@ class CustomPageView extends StatelessWidget {
           title: AppStrings.onBoardingTitle3,
           subTitle:  AppStrings.onBoardingSubTitle3,
         ),
+        CustomView(
+          image: ImageAssets.onBoardingLogo4,
+          title: AppStrings.onBoardingTitle4,
+          subTitle:  AppStrings.onBoardingSubTitle4,
+        ),
       ],
     );
   }

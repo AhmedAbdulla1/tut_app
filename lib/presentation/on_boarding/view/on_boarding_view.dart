@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tut_app/presentation/on_boarding/widget/on_boarding_body.dart';
+import 'package:tut_app/presentation/on_boarding/view/widget/on_boarding_body.dart';
+
 import 'package:tut_app/presentation/resources/color_manager.dart';
 
 class OnBoardingView extends StatefulWidget {
@@ -17,6 +18,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
       appBar: AppBar(
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: ColorManager.white,
+          statusBarBrightness: Brightness.dark,
         ),
       ),
       backgroundColor: ColorManager.white,
