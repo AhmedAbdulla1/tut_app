@@ -22,7 +22,7 @@ class _SplashViewState extends State<SplashView> {
         seconds: AppConstant.timer,
       ),
       () {
-        Navigator.pushReplacementNamed(context, Routes.settingScreen);
+        Navigator.pushReplacementNamed(context, Routes.onBoardingScreen);
       },
     );
   }
