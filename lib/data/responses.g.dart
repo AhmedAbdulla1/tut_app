@@ -5,7 +5,6 @@ part of 'responses.dart';
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
-
 BaseResponse _$BaseResponseFromJson(Map<String, dynamic> json) => BaseResponse()
   ..status = json['status'] as int?
   ..message = json['message'] as String?;
@@ -36,7 +35,7 @@ ContactsResponse _$ContactsResponseFromJson(Map<String, dynamic> json) =>
       json['email'] as String?,
       json['link'] as String?,
     );
-s
+
 Map<String, dynamic> _$ContactsResponseToJson(ContactsResponse instance) =>
     <String, dynamic>{
       'phone': instance.phone,
