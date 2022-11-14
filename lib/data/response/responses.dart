@@ -20,7 +20,6 @@ class CustomerResponse {
   String? name;
   @JsonKey(name: "numOfNotifications")
   int? numOfNotifications;
-  Map<String,dynamic> ahedm={};
 
   CustomerResponse(this.id, this.name, this.numOfNotifications);
 
