@@ -8,7 +8,7 @@ extension NonNullableString on String? {
   }
 }
 extension NonNullableInteger on int? {
-  int orEmpty() {
+  int orZero() {
     if (this == null) {
       return 0;
     } else {
