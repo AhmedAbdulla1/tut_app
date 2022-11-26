@@ -23,7 +23,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   final OnBoardingViewModel _viewModel = OnBoardingViewModel();
 
   _bind() {
-    _viewModel.start();
+    _viewModel.start();//tell view model start your jop
   }
 
   @override
