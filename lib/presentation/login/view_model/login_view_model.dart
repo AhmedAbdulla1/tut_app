@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:html';
-
 import 'package:tut_app/domain/usecase/login_usecase.dart';
 import 'package:tut_app/presentation/base/base_view_model.dart';
 import 'package:tut_app/presentation/common/freezed_data.dart';
@@ -13,9 +11,9 @@ class LoginViewModel extends BaseViewModel
       StreamController<String>.broadcast();
   final StreamController<void> _areInputsValid = StreamController.broadcast();
   var loginObject = LoginObject("", "");
- // final LoginUseCase _loginUseCase;
+  final LoginUseCase _loginUseCase;
 
-  LoginViewModel();
+  LoginViewModel(this._loginUseCase);
 
   //input
   @override

@@ -20,6 +20,5 @@ class AppStrings {
   static const String passwordError = 'Please enter your password';
   static const String login = 'LOGIN';
   static const String forgetPassword = 'Forget password';
-  static const String register = 'Not a member ?';
-  static const String signup = 'Sign up';
+  static const String register = 'Not a member ? Sign Up';
 }

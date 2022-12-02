@@ -37,7 +37,10 @@ ThemeData getApplicationTheme() {
       buttonColor: ColorManager.primary,
       splashColor: ColorManager.lightPrimary,
     ),
-
+    textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(
+      )
+    ),
     // elevated button them
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -84,13 +87,13 @@ ThemeData getApplicationTheme() {
 
       //hint style
       hintStyle: getRegularStyle(
-        color: ColorManager.grey,
+        color: ColorManager.primary,
         fontSize: FontSize.s14,
       ),
 
       //label style
       labelStyle: getMediumStyle(
-        color: ColorManager.grey,
+        color: ColorManager.primary,
         fontSize: FontSize.s14,
       ),
 
@@ -100,7 +103,7 @@ ThemeData getApplicationTheme() {
           AppSize.s8,
         ),
         borderSide: BorderSide(
-          color: ColorManager.primary,
+          color: ColorManager.grey,
           width: AppSize.s1_5,
         ),
       ),

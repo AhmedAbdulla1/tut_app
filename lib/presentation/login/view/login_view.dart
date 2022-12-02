@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:tut_app/app/di.dart';
 import 'package:tut_app/presentation/login/view_model/login_view_model.dart';
 import 'package:tut_app/presentation/resources/assets_manager.dart';
 import 'package:tut_app/presentation/resources/color_manager.dart';
+import 'package:tut_app/presentation/resources/routes_manager.dart';
 import 'package:tut_app/presentation/resources/string_manager.dart';
 import 'package:tut_app/presentation/resources/theme_manager.dart';
 import 'package:tut_app/presentation/resources/values_manager.dart';
@@ -14,7 +16,7 @@ class LogInView extends StatefulWidget {
 }
 
 class _LogInViewState extends State<LogInView> {
-  final LoginViewModel _loginViewModel = LoginViewModel();
+  final LoginViewModel _loginViewModel = instance<LoginViewModel>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -105,15 +107,44 @@ class _LogInViewState extends State<LogInView> {
                   ),
                   StreamBuilder(
                       stream: _loginViewModel.outAreInputsValid,
-                      builder: (context, snapshot) => ElevatedButton(
-                          onPressed: (snapshot.data ?? false)
-                              ? () {
-                                  _loginViewModel.login();
-                                }
-                              : null,
-                          child: const Text(
-                            AppStrings.login,
-                          )))
+                      builder: (context, snapshot) => SizedBox(
+                        height: AppSize.s40,
+                        width: double.infinity,
+                        child: ElevatedButton(
+                                onPressed: (true)
+                                    ? () {
+                                        _loginViewModel.login();
+                                      }
+                                    : null,
+                                child: const Text(
+                                  AppStrings.login,
+                                )),
+                          )),
+                  const SizedBox(
+                    height: AppSize.s8,
+                  ),
+                  Row(
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, Routes.forgetPasswordScreen);
+                        },
+                        child: Text(
+                          AppStrings.forgetPassword,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, Routes.registerScreen);
+                        },
+                        child: Text(
+                          AppStrings.register,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
