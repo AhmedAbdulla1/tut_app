@@ -1,21 +1,25 @@
 import 'dart:async';
-import 'package:tut_app/domain/usecase/login_usecase.dart';
+import 'package:tut_app/domain/usecase/register_usecase.dart';
 import 'package:tut_app/presentation/base/base_view_model.dart';
 import 'package:tut_app/presentation/common/freezed_data.dart';
 import 'package:tut_app/presentation/common/state_render/state_render.dart';
 import 'package:tut_app/presentation/common/state_render/state_renderer_imp.dart';
 
-class LoginViewModel extends BaseViewModel
-    with LoginViewModelInput, LoginViewModelOutput {
+class RegisterViewModel extends BaseViewModel
+    with RegisterViewModelInput, RegisterViewModelOutput {
   final StreamController _userNameStreamController =
       StreamController<String>.broadcast();
+  final StreamController<String> _emailStreamController =
+      StreamController.broadcast();
   final StreamController _passwordStreamController =
       StreamController<String>.broadcast();
   final StreamController<void> _areInputsValid = StreamController.broadcast();
-  var loginObject = LoginObject("", "");
-  final LoginUseCase _loginUseCase;
 
-  LoginViewModel(this._loginUseCase);
+  //ToDo change login object to register object
+  var loginObject = LoginObject("", "");
+  final RegisterUseCase _registerUseCase;
+
+  RegisterViewModel(this._registerUseCase);
 
   //input
   @override
@@ -33,23 +37,26 @@ class LoginViewModel extends BaseViewModel
   }
 
   @override
-  Sink get inputPassword => _passwordStreamController.sink;
+  Sink get inputUserName => _userNameStreamController.sink;
 
   @override
-  Sink get inputUserName => _userNameStreamController.sink;
+  Sink get inputEmail => _emailStreamController.sink;
+
+  @override
+  Sink get inputPassword => _passwordStreamController.sink;
 
   @override
   Sink get inputAreInputsValid => _areInputsValid.sink;
 
   @override
-  login() async {
+  register() async {
     inputState.add(
       LoadingState(
         stateRenderType: StateRenderType.popupLoadingState,
       ),
     );
-    (await _loginUseCase.execute(
-      LoginUseCaseInput(
+    (await _registerUseCase.execute(
+      RegisterUseCaseInput(
         loginObject.userName,
         loginObject.password,
       ),
@@ -58,7 +65,7 @@ class LoginViewModel extends BaseViewModel
   }
 
   @override
-  setEmail(String userName) {
+  setUsername(String userName) {
     inputUserName.add(userName);
     loginObject = loginObject.copyWith(
       userName: userName,
@@ -67,7 +74,16 @@ class LoginViewModel extends BaseViewModel
   }
 
   @override
-  setPassword(String password) {
+  setEmail(String email) {
+    inputEmail.add(email);
+    loginObject = loginObject.copyWith(
+      userName: email,
+    );
+    _areInputsValid.add(null);
+  }
+
+  @override
+  setPassword(String password,bool isVisible) {
     inputPassword.add(password);
     loginObject = loginObject.copyWith(
       password: password,
@@ -76,24 +92,33 @@ class LoginViewModel extends BaseViewModel
   }
 
 //output
-  @override
-  Stream<bool> get outIsPasswordValid => _passwordStreamController.stream
-      .map((password) => _isPasswordValid(password));
 
   @override
   Stream<bool> get outIsUserNameValid => _userNameStreamController.stream
       .map((userName) => _isUserNameValid(userName));
 
   @override
+  Stream<bool> get outIsEmailValid =>
+      _emailStreamController.stream.map((email) => _isEmailValid(email));
+
+  @override
+  Stream<bool> get outIsPasswordValid => _passwordStreamController.stream
+      .map((password) => _isPasswordValid(password));
+
+  @override
   Stream<bool> get outAreInputsValid =>
       _areInputsValid.stream.map((_) => _areAllInputsValid());
 
-  bool _isPasswordValid(String password) {
-    return password.isNotEmpty;
-  }
-
   bool _isUserNameValid(String userName) {
     return userName.isNotEmpty;
+  }
+
+  bool _isEmailValid(String email) {
+    return email.isNotEmpty;
+  }
+
+  bool _isPasswordValid(String password) {
+    return password.isNotEmpty;
   }
 
   bool _areAllInputsValid() {
@@ -102,26 +127,33 @@ class LoginViewModel extends BaseViewModel
         ) &&
         _isPasswordValid(
           loginObject.password,
-        );
+        ) &&
+        _isEmailValid(loginObject.userName);
   }
 }
 
-abstract class LoginViewModelInput {
-  setEmail(String userName);
+abstract class RegisterViewModelInput {
+  setUsername(String userName);
 
-  setPassword(String password);
+  setEmail(String email);
 
-  login();
+  setPassword(String password,bool isVisible);
+
+  register();
 
   Sink get inputUserName;
+
+  Sink get inputEmail;
 
   Sink get inputPassword;
 
   Sink get inputAreInputsValid;
 }
 
-abstract class LoginViewModelOutput {
+abstract class RegisterViewModelOutput {
   Stream<bool> get outIsUserNameValid;
+
+  Stream<bool> get outIsEmailValid;
 
   Stream<bool> get outIsPasswordValid;
 

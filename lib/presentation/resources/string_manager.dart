@@ -14,11 +14,18 @@ class AppStrings {
   static const String onBoardingSubTitle4 =
       "Tut app is an awesome flutter application using clean architecture #4";
   static const String skip = 'skip';
-  static const String username = 'Username or email';
+  static const String username = 'Username';
+  static const String email = 'Email';
   static const String usernameError = 'Please enter your user name or email';
   static const String password = 'Password';
   static const String passwordError = 'Please enter your password';
   static const String login = 'LOGIN';
+  static const String signup = 'SIGN UP';
   static const String forgetPassword = 'Forget password';
   static const String register = 'Not a member ? Sign Up';
+  static const String reLogin= 'already member? sign in ';
+  static const String loading = 'loading';
+  static const String ok='OK';
+  static const String retry='retry again';
+
 }
