@@ -1,6 +1,6 @@
 
 const String imagePath = "assets/images";
-const String jsonPath = "json/images";
+const String jsonPath = "assets/json";
 class ImageAssets{
   static const  String splashLogo ="$imagePath/splash_logo.png";
   static const  String onBoardingLogo1 ="$imagePath/on_boarding_logo1.svg";

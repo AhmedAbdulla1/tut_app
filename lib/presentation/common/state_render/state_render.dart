@@ -26,7 +26,7 @@ class StateRenderer extends StatelessWidget {
   final StateRenderType stateRenderType;
   final Function retryAction;
 
-  late BuildContext context1;
+  late BuildContext context;
 
   StateRenderer({
     Key? key,
@@ -38,7 +38,7 @@ class StateRenderer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context = context1;
+    context = context;
     return _getStateWidget();
   }
 
@@ -56,6 +56,7 @@ class StateRenderer extends StatelessWidget {
         return _getPopUpDialog(
           [
             _getAnimatedImage(JsonAssets.loading),
+            _getMessage(),
           ],
         );
       case StateRenderType.fullScreenErrorState:
@@ -94,6 +95,7 @@ class StateRenderer extends StatelessWidget {
       elevation: AppSize.s1_5,
       backgroundColor: Colors.transparent,
       child: Container(
+        height:250,
         decoration: BoxDecoration(
             color: ColorManager.white,
             shape: BoxShape.rectangle,
@@ -128,7 +130,7 @@ class StateRenderer extends StatelessWidget {
   Widget _getMessage() {
     return Text(
       message,
-      style: getRegularStyle(color: ColorManager.black),
+      style: getMessageStyle(color: ColorManager.black),
     );
   }
 
@@ -143,7 +145,7 @@ class StateRenderer extends StatelessWidget {
               //call retry function
               retryAction.call();
             } else {
-              Navigator.of(context1).pop();
+              Navigator.of(context).pop();
             }
           },
           child: Text(

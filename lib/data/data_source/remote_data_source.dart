@@ -35,6 +35,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       registerRequest.email,
       registerRequest.password,
       registerRequest.userName,
+      registerRequest.phone,
     );
   }
 }

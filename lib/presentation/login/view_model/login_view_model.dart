@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:tut_app/domain/usecase/login_usecase.dart';
 import 'package:tut_app/presentation/base/base_view_model.dart';
-import 'package:tut_app/presentation/common/freezed_data.dart';
+import 'package:tut_app/presentation/common/freezed_data/freezed_data.dart';
 import 'package:tut_app/presentation/common/state_render/state_render.dart';
 import 'package:tut_app/presentation/common/state_render/state_renderer_imp.dart';
 
@@ -50,7 +50,7 @@ class LoginViewModel extends BaseViewModel
     );
     (await _loginUseCase.execute(
       LoginUseCaseInput(
-        loginObject.userName,
+        loginObject.email,
         loginObject.password,
       ),
     ))
@@ -61,7 +61,7 @@ class LoginViewModel extends BaseViewModel
   setEmail(String userName) {
     inputUserName.add(userName);
     loginObject = loginObject.copyWith(
-      userName: userName,
+      email: userName,
     );
     _areInputsValid.add(null);
   }
@@ -98,7 +98,7 @@ class LoginViewModel extends BaseViewModel
 
   bool _areAllInputsValid() {
     return _isUserNameValid(
-          loginObject.userName,
+          loginObject.email,
         ) &&
         _isPasswordValid(
           loginObject.password,

@@ -21,7 +21,16 @@ TextStyle getRegularStyle({
     color,
   );
 }
-
+TextStyle getMessageStyle({
+  double fontSize = FontSize.s20,
+  required Color color,
+}) {
+  return _getTextStyle(
+    fontSize,
+    FontWeightManager.bold,
+    color,
+  );
+}
 TextStyle getMediumStyle({
   double fontSize = FontSize.s12,
   required Color color,

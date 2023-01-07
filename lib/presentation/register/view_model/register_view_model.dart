@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:tut_app/domain/usecase/register_usecase.dart';
 import 'package:tut_app/presentation/base/base_view_model.dart';
-import 'package:tut_app/presentation/common/freezed_data.dart';
+import 'package:tut_app/presentation/common/freezed_data/freezed_data.dart';
 import 'package:tut_app/presentation/common/state_render/state_render.dart';
 import 'package:tut_app/presentation/common/state_render/state_renderer_imp.dart';
 
@@ -13,10 +13,14 @@ class RegisterViewModel extends BaseViewModel
       StreamController.broadcast();
   final StreamController _passwordStreamController =
       StreamController<String>.broadcast();
+  final StreamController _phoneStreamController =
+      StreamController<String>.broadcast();
+  final StreamController _visibilityStreamController =
+      StreamController<String>.broadcast();
   final StreamController<void> _areInputsValid = StreamController.broadcast();
 
   //ToDo change login object to register object
-  var loginObject = LoginObject("", "");
+  var registerObject = RegisterObject("", "", "", "");
   final RegisterUseCase _registerUseCase;
 
   RegisterViewModel(this._registerUseCase);
@@ -26,7 +30,9 @@ class RegisterViewModel extends BaseViewModel
   void dispose() {
     super.dispose();
     _userNameStreamController.close();
+    _emailStreamController.close();
     _passwordStreamController.close();
+    _phoneStreamController.close();
     _areInputsValid.close();
   }
 
@@ -46,6 +52,12 @@ class RegisterViewModel extends BaseViewModel
   Sink get inputPassword => _passwordStreamController.sink;
 
   @override
+  Sink get inputPhone => _phoneStreamController.sink;
+
+  @override
+  Sink get inputVisibility => _visibilityStreamController.sink;
+
+  @override
   Sink get inputAreInputsValid => _areInputsValid.sink;
 
   @override
@@ -57,8 +69,10 @@ class RegisterViewModel extends BaseViewModel
     );
     (await _registerUseCase.execute(
       RegisterUseCaseInput(
-        loginObject.userName,
-        loginObject.password,
+        userName: registerObject.userName,
+        email: registerObject.email,
+        password: registerObject.password,
+        phone: registerObject.phone,
       ),
     ))
         .fold((failure) => {}, (data) => {});
@@ -67,7 +81,7 @@ class RegisterViewModel extends BaseViewModel
   @override
   setUsername(String userName) {
     inputUserName.add(userName);
-    loginObject = loginObject.copyWith(
+    registerObject = registerObject.copyWith(
       userName: userName,
     );
     _areInputsValid.add(null);
@@ -76,19 +90,32 @@ class RegisterViewModel extends BaseViewModel
   @override
   setEmail(String email) {
     inputEmail.add(email);
-    loginObject = loginObject.copyWith(
-      userName: email,
+    registerObject = registerObject.copyWith(
+      email: email,
     );
     _areInputsValid.add(null);
   }
 
   @override
-  setPassword(String password,bool isVisible) {
+  setPhone(String phone) {
+    inputPhone.add(phone);
+    registerObject = registerObject.copyWith(
+      phone: phone,
+    );
+  }
+
+  @override
+  setPassword(String password) {
     inputPassword.add(password);
-    loginObject = loginObject.copyWith(
+    registerObject = registerObject.copyWith(
       password: password,
     );
     _areInputsValid.add(null);
+  }
+
+  @override
+  setVisibility(bool isVisible) {
+    inputVisibility.add(isVisible ? "yes" : "no");
   }
 
 //output
@@ -102,8 +129,16 @@ class RegisterViewModel extends BaseViewModel
       _emailStreamController.stream.map((email) => _isEmailValid(email));
 
   @override
+  Stream<bool> get outIsPhoneValid => _phoneStreamController.stream
+      .map((password) => _isPasswordValid(password));
+
+  @override
   Stream<bool> get outIsPasswordValid => _passwordStreamController.stream
       .map((password) => _isPasswordValid(password));
+
+  @override
+  Stream<bool> get outVisibility => _visibilityStreamController.stream
+      .map((visibility) => isVisibility(visibility));
 
   @override
   Stream<bool> get outAreInputsValid =>
@@ -121,14 +156,30 @@ class RegisterViewModel extends BaseViewModel
     return password.isNotEmpty;
   }
 
+  bool _isPhoneValid(String phone) {
+    return phone.isNotEmpty;
+  }
+
   bool _areAllInputsValid() {
     return _isUserNameValid(
-          loginObject.userName,
+          registerObject.userName,
         ) &&
         _isPasswordValid(
-          loginObject.password,
+          registerObject.password,
         ) &&
-        _isEmailValid(loginObject.userName);
+        _isEmailValid(
+          registerObject.email,
+        ) &&
+        _isPhoneValid(
+          registerObject.phone,
+        );
+  }
+
+  bool isVisibility(visibility) {
+    if (visibility == 'yes') {
+      return true;
+    }
+    return false;
   }
 }
 
@@ -137,7 +188,11 @@ abstract class RegisterViewModelInput {
 
   setEmail(String email);
 
-  setPassword(String password,bool isVisible);
+  setPassword(String password);
+
+  setVisibility(bool isVisible);
+
+  setPhone(String phone);
 
   register();
 
@@ -145,7 +200,11 @@ abstract class RegisterViewModelInput {
 
   Sink get inputEmail;
 
+  Sink get inputPhone;
+
   Sink get inputPassword;
+
+  Sink get inputVisibility;
 
   Sink get inputAreInputsValid;
 }
@@ -156,6 +215,10 @@ abstract class RegisterViewModelOutput {
   Stream<bool> get outIsEmailValid;
 
   Stream<bool> get outIsPasswordValid;
+
+  Stream<bool> get outIsPhoneValid;
+
+  Stream<bool> get outVisibility;
 
   Stream<bool> get outAreInputsValid;
 }

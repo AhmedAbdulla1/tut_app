@@ -13,7 +13,7 @@ class _AppServicesClient implements AppServicesClient {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://ahemdabduall12.mocklab.io/';
+    baseUrl ??= 'https://ahmedabduall.mocklab.io/';
   }
 
   final Dio _dio;
@@ -63,8 +63,7 @@ class _AppServicesClient implements AppServicesClient {
   }
 
   @override
-  Future<AuthenticationResponse> register(
-      String email, String password, String userName) {
+  Future<AuthenticationResponse> register(String userName, String email, String password, String phone ) {
     // TODO: implement register
     throw UnimplementedError();
   }

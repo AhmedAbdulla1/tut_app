@@ -1,11 +1,23 @@
-class LoginRequest{
+class LoginRequest {
   String email;
   String password;
-  LoginRequest({required this.email,required this.password});
+
+  LoginRequest({
+    required this.email,
+    required this.password,
+  });
 }
-class RegisterRequest{
+
+class RegisterRequest {
   String email;
   String password;
   String userName;
-  RegisterRequest({required this.email,required this.password,required this.userName});
+  String phone;
+
+  RegisterRequest({
+    required this.email,
+    required this.password,
+    required this.userName,
+    required this.phone,
+  });
 }

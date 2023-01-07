@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 import 'package:tut_app/app/di.dart';
+import 'package:tut_app/presentation/common/reusable/custom_text_form_field.dart';
 import 'package:tut_app/presentation/common/state_render/state_renderer_imp.dart';
 import 'package:tut_app/presentation/register/view_model/register_view_model.dart';
 import 'package:tut_app/presentation/resources/assets_manager.dart';
@@ -20,8 +22,9 @@ class _RegisterViewState extends State<RegisterView> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  bool _isVisible = true;
+  bool _isVisible = false;
 
   _bind() {
     _registerViewModel.start(); //tell view model start your jop
@@ -39,9 +42,14 @@ class _RegisterViewState extends State<RegisterView> {
       ),
     );
     _passwordController.addListener(
+      // to list the update value in text form field
       () => _registerViewModel.setPassword(
         _passwordController.text,
-        _isVisible
+      ),
+    );
+    _phoneController.addListener(
+      () => _registerViewModel.setPhone(
+        _phoneController.text,
       ),
     );
   }
@@ -95,52 +103,66 @@ class _RegisterViewState extends State<RegisterView> {
                   height: AppSize.s28,
                 ),
                 //text form field for userName
-                StreamBuilder<bool>(
-                  stream: _registerViewModel.outIsUserNameValid,
-                  builder: (context, snapshot) => TextFormField(
-                    keyboardType: TextInputType.name,
-                    controller: _usernameController,
-                    decoration: InputDecoration(
-                      hintText: AppStrings.username,
-                      errorText: (snapshot.data ?? true)
-                          ? null
-                          : AppStrings.usernameError,
-                    ),
-                  ),
+                customTextFormField(
+                  _registerViewModel.outIsUserNameValid,
+                  _usernameController,
+                  AppStrings.username,
+                  AppStrings.usernameError,
                 ),
                 const SizedBox(
                   height: AppSize.s8,
                 ),
                 //text form field for email
-                StreamBuilder<bool>(
-                  stream: _registerViewModel.outIsEmailValid,
-                  builder: (context, snapshot) => TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      hintText: AppStrings.email,
-                      errorText: (snapshot.data ?? true)
-                          ? null
-                          : AppStrings.usernameError,
-                    ),
-                  ),
+                customTextFormField(
+                  _registerViewModel.outIsEmailValid,
+                  _emailController,
+                  AppStrings.email,
+                  AppStrings.emailError,
+                ),
+                const SizedBox(
+                  height: AppSize.s8,
+                ),
+                //text form field for phone number
+                customTextFormField(
+                  _registerViewModel.outIsPhoneValid,
+                  _phoneController,
+                  AppStrings.phone,
+                  AppStrings.phoneError,
                 ),
                 const SizedBox(
                   height: AppSize.s8,
                 ),
                 //text form field for password
-                StreamBuilder<bool>(
-                  stream: _registerViewModel.outIsPasswordValid,
+                customPasswordFormField(
+                  _registerViewModel.outIsPasswordValid,
+                  _registerViewModel.outVisibility,
+                  _passwordController,
+                  () {
+                    _isVisible = !_isVisible;
+                    _registerViewModel.setVisibility(_isVisible);
+                  },
+                  _isVisible,
+                ),
+                StreamBuilder2<bool, bool>(
+                  streams: StreamTuple2(
+                    _registerViewModel.outIsPasswordValid,
+                    _registerViewModel.outVisibility,
+                  ),
                   builder: (context, snapshot) => TextFormField(
                     keyboardType: TextInputType.visiblePassword,
                     controller: _passwordController,
                     decoration: InputDecoration(
                       suffixIcon: IconButton(
-                        onPressed: () {_isVisible=!_isVisible;},
-                        icon: const Icon(Icons.remove_red_eye_rounded,),
+                        onPressed: () {
+                          _isVisible = !_isVisible;
+                          _registerViewModel.setVisibility(_isVisible);
+                        },
+                        icon: Icon(
+                          !_isVisible ? Icons.visibility : Icons.visibility_off,
+                        ),
                       ),
                       hintText: AppStrings.password,
-                      errorText: (snapshot.data ?? true)
+                      errorText: (snapshot.snapshot1.data ?? true)
                           ? null
                           : AppStrings.passwordError,
                     ),
