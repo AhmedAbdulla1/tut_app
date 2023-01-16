@@ -20,32 +20,30 @@ Widget customTextFormField(
     ),
   );
 }
+
 Widget customPasswordFormField(
-    Stream<bool> stream1,
-    Stream<bool> stream2,
-    TextEditingController textEditingController,
-    Function() onPressed,
-    bool isVisible,
-    ){
-  return StreamBuilder2<bool, bool>(
-    streams: StreamTuple2(
-     stream1,
-      stream2,
-    ),
+  Stream<bool> stream1,
+  TextEditingController textEditingController,
+) {
+  bool isVisible=false;
+  return StreamBuilder<bool>(
+    stream:
+      stream1,
     builder: (context, snapshot) => TextFormField(
       keyboardType: TextInputType.visiblePassword,
       controller: textEditingController,
       decoration: InputDecoration(
         suffixIcon: IconButton(
-          onPressed: onPressed,
+          onPressed:(){
+            isVisible=!isVisible;
+          },
           icon: Icon(
             !isVisible ? Icons.visibility : Icons.visibility_off,
           ),
         ),
         hintText: AppStrings.password,
-        errorText: (snapshot.snapshot1.data ?? true)
-            ? null
-            : AppStrings.passwordError,
+        errorText:
+            (snapshot.data ?? true) ? null : AppStrings.passwordError,
       ),
       obscureText: isVisible,
     ),

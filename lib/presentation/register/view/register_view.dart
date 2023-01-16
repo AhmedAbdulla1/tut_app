@@ -135,13 +135,10 @@ class _RegisterViewState extends State<RegisterView> {
                 //text form field for password
                 customPasswordFormField(
                   _registerViewModel.outIsPasswordValid,
-                  _registerViewModel.outVisibility,
+
                   _passwordController,
-                  () {
-                    _isVisible = !_isVisible;
-                    _registerViewModel.setVisibility(_isVisible);
-                  },
-                  _isVisible,
+
+
                 ),
                 StreamBuilder2<bool, bool>(
                   streams: StreamTuple2(

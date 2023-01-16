@@ -54,7 +54,13 @@ class LoginViewModel extends BaseViewModel
         loginObject.password,
       ),
     ))
-        .fold((failure) => {}, (data) => {});
+        .fold(
+            (failure) => {
+                  inputState.add(ErrorState(
+                      stateRenderType: StateRenderType.popupErrorState,
+                      message: failure.message))
+                 },
+            (data) => {inputState.add(ContentState())});
   }
 
   @override

@@ -5,7 +5,7 @@ import 'package:tut_app/app/constant.dart';
 import 'package:tut_app/data/response/responses.dart';
 part 'app_api.g.dart';
 
-@RestApi(baseUrl: Constant.baseurl)
+@RestApi(baseUrl: Constant.baseurl,)
 abstract class  AppServicesClient{
   factory AppServicesClient(Dio dio,{String baseUrl}) =_AppServicesClient;
   @POST("/customers/login")

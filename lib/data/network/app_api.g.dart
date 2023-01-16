@@ -27,12 +27,14 @@ class _AppServicesClient implements AppServicesClient {
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{
+
+    };
     final _data = {
       'email': email,
       'password': password,
     };
-    final _result = await _dio.fetch<Map<String, dynamic>>(
+    final _result = await _dio.fetch<dynamic>(
         _setStreamType<AuthenticationResponse>(Options(
       method: 'POST',
       headers: _headers,
