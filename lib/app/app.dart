@@ -20,7 +20,7 @@ class _MyAppState extends State<MyApp> {
       theme: getApplicationTheme(),
       debugShowCheckedModeBanner: false,
       onGenerateRoute: RouteGenerator.getRoute,
-      initialRoute: Routes.splashScreen,
+      initialRoute:  Routes.splashScreen,
     );
   }
 }

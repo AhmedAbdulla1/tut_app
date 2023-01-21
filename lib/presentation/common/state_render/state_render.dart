@@ -26,7 +26,7 @@ class StateRenderer extends StatelessWidget {
   final StateRenderType stateRenderType;
   final Function retryAction;
 
-  late BuildContext context;
+  late BuildContext newcontext;
 
   StateRenderer({
     Key? key,
@@ -38,7 +38,7 @@ class StateRenderer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context = context;
+    newcontext = context;
     return _getStateWidget();
   }
 
@@ -145,7 +145,7 @@ class StateRenderer extends StatelessWidget {
               //call retry function
               retryAction.call();
             } else {
-              Navigator.of(context).pop();
+              Navigator.of(newcontext).pop();
             }
           },
           child: Text(

@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
 import 'package:tut_app/app/constant.dart';
@@ -13,7 +15,10 @@ abstract class  AppServicesClient{
       @Field("email") String email,
       @Field("password") String password,
       );
+  @POST("/customers/forgotPassword")
+  Future<AuthenticationResponse> forgotPassword(@Field("email") String email,);
 
+  @POST("/customers/register")
   Future<AuthenticationResponse> register(
       @Field("userName") String userName,
       @Field("email") String email,

@@ -9,7 +9,7 @@ import 'package:tut_app/data/response/responses.dart';
 import 'package:tut_app/domain/models/models.dart';
 import 'package:tut_app/domain/repository/repository.dart';
 
-class RepositoryImpl extends Repository {
+class RepositoryImpl implements Repository {
   final RemoteDataSource _remoteDataSource;
   final NetWorkInfo _networkInfo;
 
@@ -22,9 +22,11 @@ class RepositoryImpl extends Repository {
   Future<Either<Failure, Authentication>> login(
       LoginRequest loginRequest) async {
     if (await _networkInfo.isConnected) {
-      final AuthenticationResponse response =
-          await _remoteDataSource.loginResponse(loginRequest);
-      try {
+
+      try{
+        final AuthenticationResponse response =
+        await _remoteDataSource.loginResponse(loginRequest);
+        print(response.status);
         if (response.status == ApiInternalStatus.success) {
           return Right(
             response.toDomain(),
@@ -38,6 +40,7 @@ class RepositoryImpl extends Repository {
           );
         }
       } catch (error) {
+        print(error);
         return Left(
           ErrorHandler.handle(error).failure,
         );

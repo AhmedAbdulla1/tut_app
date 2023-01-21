@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:tut_app/app/app_prefs.dart';
 import 'package:tut_app/domain/models/models.dart';
 import 'package:tut_app/presentation/on_boarding/view_model/on_boarding_view_model.dart';
 import 'package:tut_app/presentation/resources/assets_manager.dart';
@@ -10,6 +11,8 @@ import 'package:tut_app/presentation/resources/constant.dart';
 import 'package:tut_app/presentation/resources/routes_manager.dart';
 import 'package:tut_app/presentation/resources/string_manager.dart';
 import 'package:tut_app/presentation/resources/values_manager.dart';
+
+import '../../../app/di.dart';
 
 class OnBoardingView extends StatefulWidget {
   const OnBoardingView({Key? key}) : super(key: key);
@@ -21,8 +24,9 @@ class OnBoardingView extends StatefulWidget {
 class _OnBoardingViewState extends State<OnBoardingView> {
   final PageController _pageController = PageController();
   final OnBoardingViewModel _viewModel = OnBoardingViewModel();
-
+  final AppPreferences _appPreferences =instance<AppPreferences>();
   _bind() {
+    _appPreferences.setPressKeyOnBoardingScreen();
     _viewModel.start(); //tell view model start your jop
   }
 

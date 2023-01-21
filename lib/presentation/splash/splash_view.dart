@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:tut_app/app/app_prefs.dart';
+import 'package:tut_app/app/di.dart';
 import 'package:tut_app/presentation/resources/assets_manager.dart';
 import 'package:tut_app/presentation/resources/color_manager.dart';
 import 'package:tut_app/presentation/resources/constant.dart';
@@ -14,6 +16,7 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
+  final AppPreferences _appPreferences = instance<AppPreferences>();
   Timer? _timer;
 
   _startTimer() {
@@ -21,8 +24,14 @@ class _SplashViewState extends State<SplashView> {
       const Duration(
         seconds: AppConstant.timer,
       ),
-      () {
-        Navigator.pushReplacementNamed(context, Routes.onBoardingScreen);
+      () async {
+        if (await _appPreferences.isPressKeyLoginScreen()) {
+          Navigator.pushReplacementNamed(context, Routes.mainScreen);
+        } else if (await _appPreferences.isPressKeyOnBoardingScreen()) {
+          Navigator.pushReplacementNamed(context, Routes.loginScreen);
+        } else {
+          Navigator.pushReplacementNamed(context, Routes.onBoardingScreen);
+        }
       },
     );
   }

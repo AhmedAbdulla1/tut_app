@@ -27,14 +27,12 @@ class _AppServicesClient implements AppServicesClient {
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{
-
-    };
+    final _headers = <String, dynamic>{};
     final _data = {
       'email': email,
       'password': password,
     };
-    final _result = await _dio.fetch<dynamic>(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<AuthenticationResponse>(Options(
       method: 'POST',
       headers: _headers,
@@ -43,6 +41,62 @@ class _AppServicesClient implements AppServicesClient {
             .compose(
               _dio.options,
               '/customers/login',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = AuthenticationResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<AuthenticationResponse> forgotPassword(email) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'email': email};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AuthenticationResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/customers/forgotPassword',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = AuthenticationResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<AuthenticationResponse> register(
+    userName,
+    email,
+    password,
+    phone,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {
+      'userName': userName,
+      'email': email,
+      'password': password,
+      'phone': phone,
+    };
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AuthenticationResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/customers/register',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -62,11 +116,5 @@ class _AppServicesClient implements AppServicesClient {
       }
     }
     return requestOptions;
-  }
-
-  @override
-  Future<AuthenticationResponse> register(String userName, String email, String password, String phone ) {
-    // TODO: implement register
-    throw UnimplementedError();
   }
 }

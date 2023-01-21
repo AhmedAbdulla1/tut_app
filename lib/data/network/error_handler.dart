@@ -7,6 +7,7 @@ class ErrorHandler implements Exception {
 
   ErrorHandler.handle(dynamic error) {
     if (error is DioError) {
+
       failure = _handlerError(error);
     } else {
       failure = DataSource.customDefault.getFailure();
@@ -165,7 +166,7 @@ class ResponseMessage {
   static const String forbidden =
       "forbidden Request ,try again later"; //  failure, API rejected request
   static const String notFound =
-      "forbidden Request ,try again later"; //  failure, not found
+      "UserName or Password is failure"; //  failure, not found
   static const String internalServerError =
       "Some thing want wrong ,try again later"; // failure, crash in server side
 

@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:tut_app/app/app_prefs.dart';
 import 'package:tut_app/app/di.dart';
 import 'package:tut_app/presentation/common/state_render/state_renderer_imp.dart';
 import 'package:tut_app/presentation/login/view_model/login_view_model.dart';
@@ -19,6 +23,8 @@ class _LogInViewState extends State<LogInView> {
   final LoginViewModel _loginViewModel = instance<LoginViewModel>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final AppPreferences _appPreferences =instance<AppPreferences>();
+
   final _formKey = GlobalKey<FormState>();
 
   _bind() {
@@ -34,6 +40,16 @@ class _LogInViewState extends State<LogInView> {
         _passwordController.text,
       ),
     );
+    _loginViewModel.isUserLoginSuccessfullyStreamController.stream
+        .listen((isLogin) {
+          print(isLogin);
+      if (isLogin) {
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+          _appPreferences.setPressKeyLoginScreen();
+          Navigator.of(context).pushReplacementNamed(Routes.mainScreen);
+        });
+      }
+    });
   }
 
   @override
