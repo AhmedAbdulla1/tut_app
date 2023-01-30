@@ -9,15 +9,19 @@ class LoginRequest {
 }
 
 class RegisterRequest {
-  String email;
-  String password;
-  String userName;
-  String phone;
+  final String userName;
+  final String countryCode;
+  final String phone;
+  final String email;
+  final String password;
+  final String profilePicture;
 
   RegisterRequest({
+    required this.userName,
+    required this.countryCode,
+    required this.phone,
     required this.email,
     required this.password,
-    required this.userName,
-    required this.phone,
+    required this.profilePicture,
   });
 }

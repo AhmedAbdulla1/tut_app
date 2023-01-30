@@ -9,5 +9,16 @@ class LoginObject with _$LoginObject{
 
 @freezed
 class RegisterObject with _$RegisterObject{
-  factory RegisterObject(String userName,String email,String password,String phone)=_RegisterObject;
+  factory RegisterObject(
+      String userName,
+      String countryCode,
+      String phone,
+      String email,
+      String password,
+      String profilePicture,
+      )=_RegisterObject;
+}
+@freezed
+class ForgotPasswordObject with _$ForgotPasswordObject{
+  factory ForgotPasswordObject(String email)=_ForgotPasswordObject;
 }

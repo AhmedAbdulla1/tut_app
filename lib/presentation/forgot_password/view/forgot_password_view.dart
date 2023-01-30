@@ -1,48 +1,42 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:tut_app/app/app_prefs.dart';
 import 'package:tut_app/app/di.dart';
+import 'package:tut_app/presentation/common/reusable/custom_text_form_field.dart';
 import 'package:tut_app/presentation/common/state_render/state_renderer_imp.dart';
-import 'package:tut_app/presentation/login/view_model/login_view_model.dart';
+import 'package:tut_app/presentation/forgot_password/view_model/forgot_password_view_model.dart';
 import 'package:tut_app/presentation/resources/assets_manager.dart';
 import 'package:tut_app/presentation/resources/color_manager.dart';
 import 'package:tut_app/presentation/resources/routes_manager.dart';
 import 'package:tut_app/presentation/resources/string_manager.dart';
 import 'package:tut_app/presentation/resources/values_manager.dart';
 
-class LogInView extends StatefulWidget {
-  const LogInView({Key? key}) : super(key: key);
+class ForgotPasswordView extends StatefulWidget {
+  const ForgotPasswordView({Key? key}) : super(key: key);
 
   @override
-  State<LogInView> createState() => _LogInViewState();
+  State<ForgotPasswordView> createState() => _ForgotPasswordViewState();
 }
 
-class _LogInViewState extends State<LogInView> {
-  final LoginViewModel _loginViewModel = instance<LoginViewModel>();
+class _ForgotPasswordViewState extends State<ForgotPasswordView> {
+  final ForgotPasswordViewModel _forgotPasswordViewModel =
+      instance<ForgotPasswordViewModel>();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final AppPreferences _appPreferences =instance<AppPreferences>();
+  final AppPreferences _appPreferences = instance<AppPreferences>();
 
   final _formKey = GlobalKey<FormState>();
 
   _bind() {
-    _loginViewModel.start(); //tell view model start your jop
+    _forgotPasswordViewModel.start(); //tell view model start your jop
     _emailController.addListener(
       // to list the update value in text form field
-      () => _loginViewModel.setEmail(
+      () => _forgotPasswordViewModel.setEmail(
         _emailController.text,
       ),
     );
-    _passwordController.addListener(
-      () => _loginViewModel.setPassword(
-        _passwordController.text,
-      ),
-    );
-    _loginViewModel.isUserLoginSuccessfullyStreamController.stream
+    _forgotPasswordViewModel
+        .isUserForgotPasswordSuccessfullyStreamController.stream
         .listen((isLogin) {
-          print(isLogin);
       if (isLogin) {
         SchedulerBinding.instance.addPostFrameCallback((_) {
           _appPreferences.setPressKeyLoginScreen();
@@ -54,7 +48,7 @@ class _LogInViewState extends State<LogInView> {
 
   @override
   void dispose() {
-    _loginViewModel.dispose();
+    _forgotPasswordViewModel.dispose();
     super.dispose();
   }
 
@@ -69,7 +63,7 @@ class _LogInViewState extends State<LogInView> {
     return Scaffold(
       backgroundColor: ColorManager.white,
       body: StreamBuilder<StateFlow>(
-        stream: _loginViewModel.outputState,
+        stream: _forgotPasswordViewModel.outputState,
         builder: (context, snapshot) =>
             snapshot.data?.getScreenWidget(
               context,
@@ -100,47 +94,24 @@ class _LogInViewState extends State<LogInView> {
                 const SizedBox(
                   height: AppSize.s28,
                 ),
-                StreamBuilder<bool>(
-                  stream: _loginViewModel.outIsUserNameValid,
-                  builder: (context, snapshot) => TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      hintText: AppStrings.username,
-                      errorText: (snapshot.data ?? true)
-                          ? null
-                          : AppStrings.usernameError,
-                    ),
-                  ),
+                customTextFormField(
+                    _forgotPasswordViewModel.outIsEmailValid,
+                    _emailController,
+                    AppStrings.email,
+                    AppStrings.emailError
                 ),
                 const SizedBox(
-                  height: AppSize.s8,
+                  height: AppSize.s28,
                 ),
                 StreamBuilder<bool>(
-                  stream: _loginViewModel.outIsPasswordValid,
-                  builder: (context, snapshot) => TextFormField(
-                    keyboardType: TextInputType.visiblePassword,
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      hintText: AppStrings.password,
-                      errorText: (snapshot.data ?? true)
-                          ? null
-                          : AppStrings.passwordError,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: AppSize.s40,
-                ),
-                StreamBuilder<bool>(
-                    stream: _loginViewModel.outAreInputsValid,
+                    stream: _forgotPasswordViewModel.outIsEmailValid,
                     builder: (context, snapshot) => SizedBox(
                           height: AppSize.s40,
                           width: double.infinity,
                           child: ElevatedButton(
                               onPressed: (snapshot.data ?? false)
                                   ? () {
-                                      _loginViewModel.login();
+                                      _forgotPasswordViewModel.forgotPassword();
                                     }
                                   : null,
                               child: const Text(
@@ -151,29 +122,23 @@ class _LogInViewState extends State<LogInView> {
                   height: AppSize.s8,
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushReplacementNamed(
-                            context, Routes.forgotPasswordScreen);
-                      },
-                      child: Text(
-                        AppStrings.forgetPassword,
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
+                    Text(
+                      AppStrings.didnotRecieve,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushReplacementNamed(
-                            context, Routes.registerScreen);
+                        _forgotPasswordViewModel.forgotPassword();
                       },
                       child: Text(
-                        AppStrings.register,
+                        AppStrings.resend,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),

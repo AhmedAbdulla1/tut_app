@@ -57,6 +57,20 @@ class EmptyState extends StateFlow {
   @override
   StateRenderType getStateRenderType() => StateRenderType.fullScreenEmptyState;
 }
+
+// success state
+class SuccessState extends StateFlow{
+  final String message;
+
+  SuccessState(this.message);
+
+  @override
+  String getMessage() =>message;
+
+  @override
+  StateRenderType getStateRenderType() =>StateRenderType.popupSuccessState;
+
+}
 // content state
 
 class ContentState extends StateFlow {
@@ -104,7 +118,13 @@ extension StateFlowExtension on StateFlow {
         return StateRenderer(
             stateRenderType: StateRenderType.fullScreenEmptyState,
             retryAction: () {});
-      case ContentState:{
+      case ContentState:
+        {
+          return contentScreenWidget;
+        }
+      case SuccessState:{
+        dismissDialog(context);
+        showPopup(context, StateRenderType.popupSuccessState, getMessage());
         return contentScreenWidget;
       }
       default:
@@ -122,12 +142,14 @@ extension StateFlowExtension on StateFlow {
             message: message,
             retryAction: () {})));
   }
+
   // for check if there dialog message of not
-  _isCurrentDialogShowing(BuildContext context)=>
-      ModalRoute.of(context)?.isCurrent!=true;
+  _isCurrentDialogShowing(BuildContext context) =>
+      ModalRoute.of(context)?.isCurrent != true;
+
   dismissDialog(BuildContext context) {
-    if(_isCurrentDialogShowing(context)){
-      Navigator.of(context,rootNavigator: true).pop(true);
+    if (_isCurrentDialogShowing(context)) {
+      Navigator.of(context, rootNavigator: true).pop(true);
     }
   }
 }

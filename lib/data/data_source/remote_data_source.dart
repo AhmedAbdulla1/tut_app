@@ -8,6 +8,7 @@ abstract class RemoteDataSource {
   Future<AuthenticationResponse> loginResponse(
     LoginRequest loginRequest,
   );
+  Future<ForgotPasswordResponse> forgotPasswordResponse(String email);
   Future<AuthenticationResponse> registerResponse(
       RegisterRequest registerRequest,
       );
@@ -28,7 +29,12 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       loginRequest.password,
     );
   }
-
+  @override
+  Future<ForgotPasswordResponse> forgotPasswordResponse(String email) async {
+    return await _appServicesClient.forgotPassword(
+      email,
+    );
+  }
   @override
   Future<AuthenticationResponse> registerResponse(RegisterRequest registerRequest)async {
     return await _appServicesClient.register(

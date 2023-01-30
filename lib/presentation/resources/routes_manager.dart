@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tut_app/app/di.dart';
-import 'package:tut_app/presentation/forget_password/forget_password_view.dart';
+import 'package:tut_app/presentation/forgot_password/view/forgot_password_view.dart';
 import 'package:tut_app/presentation/home/home_view.dart';
 import 'package:tut_app/presentation/login/view/login_view.dart';
 import 'package:tut_app/presentation/on_boarding/view/on_boarding_view.dart';
@@ -15,7 +15,7 @@ class Routes {
   static const String onBoardingScreen = "/onBoarding";
   static const String loginScreen = "/login";
   static const String registerScreen = "/register";
-  static const String forgetPasswordScreen = "/forgetPassword";
+  static const String forgotPasswordScreen = "/forgetPassword";
   static const String mainScreen = "/main";
   static const String storeDetailsScreen = "/storeDetails";
   static const String settingScreen = "/setting";
@@ -42,8 +42,13 @@ class RouteGenerator {
             return const RegisterView();
           },
         );
-      case Routes.forgetPasswordScreen:
-        return MaterialPageRoute(builder: (_) => const ForgetPasswordView());
+      case Routes.forgotPasswordScreen:
+        return MaterialPageRoute(
+          builder: (_) {
+            initForgotPasswordModule();
+            return const ForgotPasswordView();
+          },
+        );
       case Routes.mainScreen:
         return MaterialPageRoute(builder: (_) => const HomeView());
       case Routes.settingScreen:

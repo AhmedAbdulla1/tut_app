@@ -25,13 +25,13 @@ class _SplashViewState extends State<SplashView> {
         seconds: AppConstant.timer,
       ),
       () async {
-        if (await _appPreferences.isPressKeyLoginScreen()) {
-          Navigator.pushReplacementNamed(context, Routes.mainScreen);
-        } else if (await _appPreferences.isPressKeyOnBoardingScreen()) {
-          Navigator.pushReplacementNamed(context, Routes.loginScreen);
-        } else {
+        // if (await _appPreferences.isPressKeyLoginScreen()) {
+        //   Navigator.pushReplacementNamed(context, Routes.mainScreen);
+        // } else if (await _appPreferences.isPressKeyOnBoardingScreen()) {
+        //   Navigator.pushReplacementNamed(context, Routes.loginScreen);
+        // } else {
           Navigator.pushReplacementNamed(context, Routes.onBoardingScreen);
-        }
+        // }
       },
     );
   }

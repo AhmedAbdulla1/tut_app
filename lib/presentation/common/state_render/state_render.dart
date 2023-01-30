@@ -12,6 +12,7 @@ enum StateRenderType {
   //popup state
   popupErrorState,
   popupLoadingState,
+  popupSuccessState,
   //full screen state
   fullScreenErrorState,
   fullScreenLoadingState,
@@ -26,7 +27,7 @@ class StateRenderer extends StatelessWidget {
   final StateRenderType stateRenderType;
   final Function retryAction;
 
-  late BuildContext newcontext;
+  late BuildContext newContext;
 
   StateRenderer({
     Key? key,
@@ -38,7 +39,7 @@ class StateRenderer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    newcontext = context;
+    newContext = context;
     return _getStateWidget();
   }
 
@@ -59,6 +60,12 @@ class StateRenderer extends StatelessWidget {
             _getMessage(),
           ],
         );
+      case StateRenderType.popupSuccessState:
+        return _getPopUpDialog([
+          _getAnimatedImage(JsonAssets.success),
+          _getMessage(),
+          _getRetryButton(AppStrings.ok)
+        ]);
       case StateRenderType.fullScreenErrorState:
         return _getItemColumn([
           _getAnimatedImage(JsonAssets.error),
@@ -131,6 +138,7 @@ class StateRenderer extends StatelessWidget {
     return Text(
       message,
       style: getMessageStyle(color: ColorManager.black),
+      textAlign: TextAlign.center,
     );
   }
 
@@ -145,7 +153,7 @@ class StateRenderer extends StatelessWidget {
               //call retry function
               retryAction.call();
             } else {
-              Navigator.of(newcontext).pop();
+              Navigator.of(newContext).pop();
             }
           },
           child: Text(

@@ -25,6 +25,8 @@ class AppStrings {
   static const String login = 'LOGIN';
   static const String signup = 'SIGN UP';
   static const String forgetPassword = 'Forget password';
+  static const String didnotRecieve = 'Didn\'t recieve email ?';
+  static const String resend = 'Resend';
   static const String register = 'Not a member ? Sign Up';
   static const String reLogin= 'already member? sign in ';
   static const String loading = 'loading';

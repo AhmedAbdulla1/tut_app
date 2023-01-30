@@ -24,7 +24,8 @@ class OnBoardingView extends StatefulWidget {
 class _OnBoardingViewState extends State<OnBoardingView> {
   final PageController _pageController = PageController();
   final OnBoardingViewModel _viewModel = OnBoardingViewModel();
-  final AppPreferences _appPreferences =instance<AppPreferences>();
+  final AppPreferences _appPreferences = instance<AppPreferences>();
+
   _bind() {
     _appPreferences.setPressKeyOnBoardingScreen();
     _viewModel.start(); //tell view model start your jop
@@ -118,12 +119,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                     curve: Curves.easeIn);
               },
             ),
-          )
-
-// circle indicator
-
-          // right arrow
-          ,
+          ),
           Row(
             children: [
               for (int i = 0; i < sliderViewObject.numOfSlides; i++)

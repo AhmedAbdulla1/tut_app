@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tut_app/data/network/failure.dart';
 import 'package:tut_app/data/network/requests.dart';
 import 'package:tut_app/domain/models/models.dart';
@@ -6,32 +7,38 @@ import 'package:tut_app/domain/repository/repository.dart';
 import 'package:tut_app/domain/usecase/base_usecase.dart';
 
 class RegisterUseCase
-    extends BaseUseCase<RegisterUseCaseInput, Authentication> {
+    extends BaseUseCase<RegisterUseCaseInput, UserCredential> {
   final Repository _repository;
 
   RegisterUseCase(this._repository);
 
   @override
-  Future<Either<Failure, Authentication>> execute(RegisterUseCaseInput input) {
+  Future<Either<Failure, UserCredential>> execute(RegisterUseCaseInput input) {
     return _repository.register(RegisterRequest(
       userName: input.userName,
+      countryCode: input.countryCode,
+      phone: input.phone,
       email: input.email,
       password: input.password,
-      phone: input.phone,
+      profilePicture: input.profilePicture,
     ));
   }
 }
 
 class RegisterUseCaseInput {
   final String userName;
+  final String countryCode;
+  final String phone;
   final String email;
   final String password;
-  final String phone;
+  final String profilePicture;
 
   RegisterUseCaseInput({
     required this.userName,
+    required this.countryCode,
+    required this.phone,
     required this.email,
     required this.password,
-    required this.phone,
+    required this.profilePicture,
   });
 }

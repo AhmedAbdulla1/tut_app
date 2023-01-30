@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tut_app/domain/usecase/register_usecase.dart';
 import 'package:tut_app/presentation/base/base_view_model.dart';
 import 'package:tut_app/presentation/common/freezed_data/freezed_data.dart';
 import 'package:tut_app/presentation/common/state_render/state_render.dart';
 import 'package:tut_app/presentation/common/state_render/state_renderer_imp.dart';
+import 'package:tut_app/presentation/resources/string_manager.dart';
 
 class RegisterViewModel extends BaseViewModel
     with RegisterViewModelInput, RegisterViewModelOutput {
@@ -15,12 +18,14 @@ class RegisterViewModel extends BaseViewModel
       StreamController<String>.broadcast();
   final StreamController _phoneStreamController =
       StreamController<String>.broadcast();
+  final StreamController profilePictureStreamController =
+    StreamController<File>.broadcast();
   final StreamController _visibilityStreamController =
       StreamController<String>.broadcast();
   final StreamController<void> _areInputsValid = StreamController.broadcast();
-
-  //ToDo change login object to register object
-  var registerObject = RegisterObject("", "", "", "");
+  StreamController isUserRegisterSuccessfullyStreamController =
+      StreamController<bool>();
+  var registerObject = RegisterObject("", "", "", "", "", "");
   final RegisterUseCase _registerUseCase;
 
   RegisterViewModel(this._registerUseCase);
@@ -70,46 +75,84 @@ class RegisterViewModel extends BaseViewModel
     (await _registerUseCase.execute(
       RegisterUseCaseInput(
         userName: registerObject.userName,
+        countryCode: registerObject.countryCode,
+        phone: registerObject.phone,
         email: registerObject.email,
         password: registerObject.password,
-        phone: registerObject.phone,
+        profilePicture: registerObject.profilePicture,
       ),
     ))
-        .fold((failure) => {}, (data) => {});
+        .fold(
+            (failure) => inputState.add(
+                  ErrorState(
+                    stateRenderType: StateRenderType.popupErrorState,
+                    message: failure.message,
+                  ),
+                ), (data) {
+      inputState.add(
+        ContentState(),
+      );
+      isUserRegisterSuccessfullyStreamController.add(true);
+    });
   }
 
   @override
   setUsername(String userName) {
     inputUserName.add(userName);
-    registerObject = registerObject.copyWith(
-      userName: userName,
-    );
+    if (_isUserNameValid(userName)) {
+      registerObject = registerObject.copyWith(
+        userName: userName,
+      );
+    } else {
+      registerObject = registerObject.copyWith(
+        userName: '',
+      );
+    }
     _areInputsValid.add(null);
   }
 
   @override
   setEmail(String email) {
     inputEmail.add(email);
-    registerObject = registerObject.copyWith(
-      email: email,
-    );
+    if (_isEmailValid(email)) {
+      registerObject = registerObject.copyWith(
+        email: email,
+      );
+    } else {
+      registerObject = registerObject.copyWith(
+        email: '',
+      );
+    }
     _areInputsValid.add(null);
   }
 
   @override
   setPhone(String phone) {
     inputPhone.add(phone);
-    registerObject = registerObject.copyWith(
-      phone: phone,
-    );
+    if (_isPhoneValid(phone)) {
+      registerObject = registerObject.copyWith(
+        phone: phone,
+      );
+    } else {
+      registerObject = registerObject.copyWith(
+        phone: '',
+      );
+    }
+    _areInputsValid.add(null);
   }
 
   @override
   setPassword(String password) {
     inputPassword.add(password);
-    registerObject = registerObject.copyWith(
-      password: password,
-    );
+    if (_isPasswordValid(password)) {
+      registerObject = registerObject.copyWith(
+        password: password,
+      );
+    } else {
+      registerObject = registerObject.copyWith(
+        password: '',
+      );
+    }
     _areInputsValid.add(null);
   }
 
@@ -181,6 +224,15 @@ class RegisterViewModel extends BaseViewModel
     }
     return false;
   }
+  
+
+  @override
+  // TODO: implement inputProfilePicture
+  Sink get inputProfilePicture => profilePictureStreamController.sink;
+
+  @override
+  
+  Stream<File> get outputProfilePicture => profilePictureStreamController.stream.map((file) =>file);
 }
 
 abstract class RegisterViewModelInput {
@@ -198,11 +250,14 @@ abstract class RegisterViewModelInput {
 
   Sink get inputUserName;
 
-  Sink get inputEmail;
 
   Sink get inputPhone;
 
+  Sink get inputEmail;
+
   Sink get inputPassword;
+
+  Sink get inputProfilePicture;
 
   Sink get inputVisibility;
 
@@ -218,6 +273,7 @@ abstract class RegisterViewModelOutput {
 
   Stream<bool> get outIsPhoneValid;
 
+  Stream<File> get outputProfilePicture;
   Stream<bool> get outVisibility;
 
   Stream<bool> get outAreInputsValid;
