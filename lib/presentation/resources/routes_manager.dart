@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tut_app/app/di.dart';
 import 'package:tut_app/presentation/forgot_password/view/forgot_password_view.dart';
-import 'package:tut_app/presentation/home/home_view.dart';
 import 'package:tut_app/presentation/login/view/login_view.dart';
+import 'package:tut_app/presentation/main/main_view.dart';
 import 'package:tut_app/presentation/on_boarding/view/on_boarding_view.dart';
 import 'package:tut_app/presentation/register/view/register_view.dart';
 import 'package:tut_app/presentation/resources/string_manager.dart';
@@ -50,7 +50,7 @@ class RouteGenerator {
           },
         );
       case Routes.mainScreen:
-        return MaterialPageRoute(builder: (_) => const HomeView());
+        return MaterialPageRoute(builder: (_) => const MainView());
       case Routes.settingScreen:
         return MaterialPageRoute(builder: (_) => const SettingView());
       case Routes.storeDetailsScreen:

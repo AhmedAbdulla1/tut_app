@@ -30,3 +30,4 @@ extension AuthenticationResponseMapper on AuthenticationResponse? {
     );
   }
 }
+

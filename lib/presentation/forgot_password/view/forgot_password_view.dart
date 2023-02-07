@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:tut_app/app/app_prefs.dart';
 import 'package:tut_app/app/di.dart';
+import 'package:tut_app/presentation/common/reusable/custom_button.dart';
 import 'package:tut_app/presentation/common/reusable/custom_text_form_field.dart';
 import 'package:tut_app/presentation/common/state_render/state_renderer_imp.dart';
 import 'package:tut_app/presentation/forgot_password/view_model/forgot_password_view_model.dart';
@@ -95,29 +96,19 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                   height: AppSize.s28,
                 ),
                 customTextFormField(
-                    _forgotPasswordViewModel.outIsEmailValid,
-                    _emailController,
-                    AppStrings.email,
-                    AppStrings.emailError
-                ),
+                    stream: _forgotPasswordViewModel.outIsEmailValid,
+                    textEditingController: _emailController,
+                    hintText: AppStrings.email,
+                    errorText: AppStrings.emailError),
                 const SizedBox(
                   height: AppSize.s28,
                 ),
-                StreamBuilder<bool>(
+                customElevatedButton(
                     stream: _forgotPasswordViewModel.outIsEmailValid,
-                    builder: (context, snapshot) => SizedBox(
-                          height: AppSize.s40,
-                          width: double.infinity,
-                          child: ElevatedButton(
-                              onPressed: (snapshot.data ?? false)
-                                  ? () {
-                                      _forgotPasswordViewModel.forgotPassword();
-                                    }
-                                  : null,
-                              child: const Text(
-                                AppStrings.login,
-                              )),
-                        )),
+                    text: AppStrings.resetPassword,
+                    onPressed: () {
+                      _forgotPasswordViewModel.forgotPassword();
+                    }),
                 const SizedBox(
                   height: AppSize.s8,
                 ),

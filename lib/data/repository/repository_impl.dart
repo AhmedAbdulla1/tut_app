@@ -1,13 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tut_app/data/data_source/remote_data_source.dart';
-import 'package:tut_app/data/mapper/mapper.dart';
 import 'package:tut_app/data/network/error_handler.dart';
 import 'package:tut_app/data/network/failure.dart';
 import 'package:tut_app/data/network/network_info.dart';
 import 'package:tut_app/data/network/requests.dart';
 import 'package:tut_app/data/response/responses.dart';
-import 'package:tut_app/domain/models/models.dart';
 import 'package:tut_app/domain/repository/repository.dart';
 
 class RepositoryImpl implements Repository {
@@ -42,8 +40,19 @@ class RepositoryImpl implements Repository {
           return Left(
             Failure(
               code: ApiInternalStatus.failure,
-              message: 'Wrong password provided for that user.',
+              message: 'Wrong password provided for that user',
             ),
+          );
+        } else if (e.code == "invalid-email") {
+          return Left(
+            Failure(
+              code: ApiInternalStatus.failure,
+              message: 'Invalid-Email',
+            ),
+          );
+        } else {
+          return Left(
+            ErrorHandler.handle(e).failure,
           );
         }
       } catch (error) {
@@ -51,10 +60,11 @@ class RepositoryImpl implements Repository {
           ErrorHandler.handle(error).failure,
         );
       }
+    } else {
+      return Left(
+        DataSource.noInternetConnection.getFailure(),
+      );
     }
-    return Left(
-      DataSource.noInternetConnection.getFailure(),
-    );
   }
 
   @override
@@ -66,7 +76,6 @@ class RepositoryImpl implements Repository {
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: registerRequest.email,
           password: registerRequest.password,
-
         );
         return Right(
           credential,

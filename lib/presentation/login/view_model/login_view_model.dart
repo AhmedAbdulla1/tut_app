@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:tut_app/domain/usecase/login_usecase.dart';
 import 'package:tut_app/presentation/base/base_view_model.dart';
 import 'package:tut_app/presentation/common/freezed_data/freezed_data.dart';
@@ -16,6 +17,8 @@ class LoginViewModel extends BaseViewModel
   final LoginUseCase _loginUseCase;
   StreamController isUserLoginSuccessfullyStreamController =
       StreamController<bool>();
+  final StreamController _visibilityStreamController =
+      StreamController<String>.broadcast();
 
   LoginViewModel(this._loginUseCase);
 
@@ -25,6 +28,7 @@ class LoginViewModel extends BaseViewModel
     super.dispose();
     _userNameStreamController.close();
     _passwordStreamController.close();
+    _visibilityStreamController.close();
     _areInputsValid.close();
     isUserLoginSuccessfullyStreamController.close();
   }
@@ -117,6 +121,22 @@ class LoginViewModel extends BaseViewModel
           loginObject.password,
         );
   }
+
+  @override
+  Sink get inputVisibility => _visibilityStreamController.sink;
+
+  @override
+  Stream<bool> get outVisibility => _visibilityStreamController.stream
+      .map((isVisible) => _isVisible(isVisible));
+
+  @override
+  setVisibility(bool isVisible) {
+    inputVisibility.add(isVisible ? "yes" : "no");
+  }
+
+  _isVisible(isVisible) {
+    return isVisible == 'yes' ? true : false;
+  }
 }
 
 abstract class LoginViewModelInput {
@@ -124,11 +144,15 @@ abstract class LoginViewModelInput {
 
   setPassword(String password);
 
+  setVisibility(bool isVisible);
+
   login();
 
   Sink get inputUserName;
 
   Sink get inputPassword;
+
+  Sink get inputVisibility;
 
   Sink get inputAreInputsValid;
 }
@@ -137,6 +161,8 @@ abstract class LoginViewModelOutput {
   Stream<bool> get outIsUserNameValid;
 
   Stream<bool> get outIsPasswordValid;
+
+  Stream<bool> get outVisibility;
 
   Stream<bool> get outAreInputsValid;
 }

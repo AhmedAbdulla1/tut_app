@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 import 'package:tut_app/presentation/resources/string_manager.dart';
 
-Widget customTextFormField(
-  Stream<bool> stream,
-  TextEditingController textEditingController,
-  String hintText,
-  String errorText,
-) {
+Widget customTextFormField({
+  required Stream<bool> stream,
+  required TextEditingController textEditingController,
+  TextInputType textInputType = TextInputType.emailAddress,
+  required String hintText,
+  required String errorText,
+}) {
   return StreamBuilder<bool>(
     stream: stream,
     builder: (context, snapshot) => TextFormField(
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: textInputType,
       controller: textEditingController,
       decoration: InputDecoration(
         hintText: hintText,
@@ -21,31 +22,30 @@ Widget customTextFormField(
   );
 }
 
-Widget customPasswordFormField(
-  Stream<bool> stream1,
-  TextEditingController textEditingController,
-) {
-  bool isVisible=false;
-  return StreamBuilder<bool>(
-    stream:
-      stream1,
+Widget customPasswordFormField({
+required  Stream<bool> stream1,
+required  Stream<bool> stream2,
+required  TextEditingController textEditingController,
+  required VoidCallback onPressed,
+}) {
+
+
+  return StreamBuilder2<bool,bool>(
+    streams: StreamTuple2(stream1,stream2),
     builder: (context, snapshot) => TextFormField(
       keyboardType: TextInputType.visiblePassword,
       controller: textEditingController,
       decoration: InputDecoration(
         suffixIcon: IconButton(
-          onPressed:(){
-            isVisible=!isVisible;
-          },
+          onPressed: onPressed,
           icon: Icon(
-            !isVisible ? Icons.visibility : Icons.visibility_off,
+            !(snapshot.snapshot2.data?? true ) ? Icons.visibility : Icons.visibility_off,
           ),
         ),
         hintText: AppStrings.password,
-        errorText:
-            (snapshot.data ?? true) ? null : AppStrings.passwordError,
+        errorText: (snapshot.snapshot1.data ?? true) ? null : AppStrings.passwordError,
       ),
-      obscureText: isVisible,
+      obscureText: snapshot.snapshot2.data??true,
     ),
   );
 }

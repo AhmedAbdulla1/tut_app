@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:tut_app/data/network/failure.dart';
 import 'package:tut_app/data/network/requests.dart';
-import 'package:tut_app/domain/models/models.dart';
 import 'package:tut_app/domain/repository/repository.dart';
 import 'package:tut_app/domain/usecase/base_usecase.dart';
 
@@ -27,7 +27,7 @@ class RegisterUseCase
 
 class RegisterUseCaseInput {
   final String userName;
-  final String countryCode;
+  final Widget countryCode;
   final String phone;
   final String email;
   final String password;

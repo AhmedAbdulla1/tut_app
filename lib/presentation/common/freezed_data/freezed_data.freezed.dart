@@ -152,7 +152,7 @@ abstract class _LoginObject implements LoginObject {
 /// @nodoc
 mixin _$RegisterObject {
   String get userName => throw _privateConstructorUsedError;
-  String get countryCode => throw _privateConstructorUsedError;
+  Widget get countryCode => throw _privateConstructorUsedError;
   String get phone => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
@@ -171,7 +171,7 @@ abstract class $RegisterObjectCopyWith<$Res> {
   @useResult
   $Res call(
       {String userName,
-      String countryCode,
+      Widget countryCode,
       String phone,
       String email,
       String password,
@@ -206,7 +206,7 @@ class _$RegisterObjectCopyWithImpl<$Res, $Val extends RegisterObject>
       countryCode: null == countryCode
           ? _value.countryCode
           : countryCode // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Widget,
       phone: null == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
@@ -237,7 +237,7 @@ abstract class _$$_RegisterObjectCopyWith<$Res>
   @useResult
   $Res call(
       {String userName,
-      String countryCode,
+      Widget countryCode,
       String phone,
       String email,
       String password,
@@ -270,7 +270,7 @@ class __$$_RegisterObjectCopyWithImpl<$Res>
       null == countryCode
           ? _value.countryCode
           : countryCode // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Widget,
       null == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
@@ -300,7 +300,7 @@ class _$_RegisterObject implements _RegisterObject {
   @override
   final String userName;
   @override
-  final String countryCode;
+  final Widget countryCode;
   @override
   final String phone;
   @override
@@ -346,7 +346,7 @@ class _$_RegisterObject implements _RegisterObject {
 abstract class _RegisterObject implements RegisterObject {
   factory _RegisterObject(
       final String userName,
-      final String countryCode,
+      final Widget countryCode,
       final String phone,
       final String email,
       final String password,
@@ -355,7 +355,7 @@ abstract class _RegisterObject implements RegisterObject {
   @override
   String get userName;
   @override
-  String get countryCode;
+  Widget get countryCode;
   @override
   String get phone;
   @override

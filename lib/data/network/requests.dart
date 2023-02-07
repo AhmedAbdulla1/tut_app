@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class LoginRequest {
   String email;
   String password;
@@ -10,7 +12,7 @@ class LoginRequest {
 
 class RegisterRequest {
   final String userName;
-  final String countryCode;
+  final Widget countryCode;
   final String phone;
   final String email;
   final String password;

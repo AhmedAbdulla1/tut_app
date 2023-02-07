@@ -24,13 +24,21 @@ class AppStrings {
   static const String passwordError = 'Please enter your password';
   static const String login = 'LOGIN';
   static const String signup = 'SIGN UP';
+  static const String resetPassword = 'Reset Password';
   static const String forgetPassword = 'Forget password';
-  static const String didnotRecieve = 'Didn\'t recieve email ?';
+  static const String didnotRecieve = "Didn't recieve email ?";
   static const String resend = 'Resend';
   static const String register = 'Not a member ? Sign Up';
   static const String reLogin= 'already member? sign in ';
   static const String loading = 'loading';
   static const String ok='OK';
   static const String retry='retry again';
+  static const profilePicture = "upload_profile_picture";
+  static const photoGallery = "photo_from_galley";
+  static const photoCamera = "photo_from_camera";
+  static const home= 'Home';
+  static const notification= 'Notification';
+  static const search= 'Search';
+  static const setting = 'Setting';
 
 }

@@ -18,10 +18,10 @@ class OnBoardingView extends StatefulWidget {
   const OnBoardingView({Key? key}) : super(key: key);
 
   @override
-  _OnBoardingViewState createState() => _OnBoardingViewState();
+  OnBoardingViewState createState() => OnBoardingViewState();
 }
 
-class _OnBoardingViewState extends State<OnBoardingView> {
+class OnBoardingViewState extends State<OnBoardingView> {
   final PageController _pageController = PageController();
   final OnBoardingViewModel _viewModel = OnBoardingViewModel();
   final AppPreferences _appPreferences = instance<AppPreferences>();
@@ -36,7 +36,12 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     _bind();
     super.initState();
   }
-
+  @override
+  void dispose() {
+    _viewModel.dispose();
+    _pageController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<SliderViewObject>(
@@ -158,11 +163,6 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     }
   }
 
-  @override
-  void dispose() {
-    _viewModel.dispose();
-    super.dispose();
-  }
 }
 
 class OnBoardingPage extends StatelessWidget {

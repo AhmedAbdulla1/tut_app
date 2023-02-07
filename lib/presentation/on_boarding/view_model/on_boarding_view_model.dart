@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:tut_app/domain/models/models.dart';
 import 'package:tut_app/presentation/base/base_view_model.dart';
-import 'package:tut_app/presentation/common/state_render/state_renderer_imp.dart';
 import 'package:tut_app/presentation/resources/assets_manager.dart';
 import 'package:tut_app/presentation/resources/string_manager.dart';
 

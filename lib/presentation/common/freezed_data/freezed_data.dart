@@ -1,4 +1,5 @@
 
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'freezed_data.freezed.dart';
 
@@ -11,7 +12,7 @@ class LoginObject with _$LoginObject{
 class RegisterObject with _$RegisterObject{
   factory RegisterObject(
       String userName,
-      String countryCode,
+      Widget countryCode,
       String phone,
       String email,
       String password,

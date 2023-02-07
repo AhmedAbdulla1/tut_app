@@ -1,9 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:tut_app/app/app_prefs.dart';
 import 'package:tut_app/app/di.dart';
+import 'package:tut_app/presentation/common/reusable/custom_button.dart';
+import 'package:tut_app/presentation/common/reusable/custom_text_form_field.dart';
 import 'package:tut_app/presentation/common/state_render/state_renderer_imp.dart';
 import 'package:tut_app/presentation/login/view_model/login_view_model.dart';
 import 'package:tut_app/presentation/resources/assets_manager.dart';
@@ -23,9 +23,10 @@ class _LogInViewState extends State<LogInView> {
   final LoginViewModel _loginViewModel = instance<LoginViewModel>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final AppPreferences _appPreferences =instance<AppPreferences>();
+  final AppPreferences _appPreferences = instance<AppPreferences>();
 
   final _formKey = GlobalKey<FormState>();
+  bool isVisible = true;
 
   _bind() {
     _loginViewModel.start(); //tell view model start your jop
@@ -42,7 +43,6 @@ class _LogInViewState extends State<LogInView> {
     );
     _loginViewModel.isUserLoginSuccessfullyStreamController.stream
         .listen((isLogin) {
-          print(isLogin);
       if (isLogin) {
         SchedulerBinding.instance.addPostFrameCallback((_) {
           _appPreferences.setPressKeyLoginScreen();
@@ -100,53 +100,47 @@ class _LogInViewState extends State<LogInView> {
                 const SizedBox(
                   height: AppSize.s28,
                 ),
-                StreamBuilder<bool>(
+                customTextFormField(
                   stream: _loginViewModel.outIsUserNameValid,
-                  builder: (context, snapshot) => TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      hintText: AppStrings.username,
-                      errorText: (snapshot.data ?? true)
-                          ? null
-                          : AppStrings.usernameError,
-                    ),
-                  ),
+                  textEditingController: _emailController,
+                  hintText: AppStrings.email,
+                  errorText: AppStrings.emailError,
                 ),
                 const SizedBox(
                   height: AppSize.s8,
                 ),
-                StreamBuilder<bool>(
-                  stream: _loginViewModel.outIsPasswordValid,
-                  builder: (context, snapshot) => TextFormField(
-                    keyboardType: TextInputType.visiblePassword,
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      hintText: AppStrings.password,
-                      errorText: (snapshot.data ?? true)
-                          ? null
-                          : AppStrings.passwordError,
-                    ),
-                  ),
+                customPasswordFormField(
+                  stream1: _loginViewModel.outIsUserNameValid,
+                  stream2: _loginViewModel.outVisibility,
+                  textEditingController: _passwordController,
+                  onPressed: () {
+                    isVisible = !isVisible;
+                    _loginViewModel.setVisibility(isVisible);
+                  },
                 ),
+                // StreamBuilder<bool>(
+                //   stream: _loginViewModel.outIsPasswordValid,
+                //   builder: (context, snapshot) => TextFormField(
+                //     keyboardType: TextInputType.visiblePassword,
+                //     controller: _passwordController,
+                //     decoration: InputDecoration(
+                //       hintText: AppStrings.password,
+                //       errorText: (snapshot.data ?? true)
+                //           ? null
+                //           : AppStrings.passwordError,
+                //     ),
+                //   ),
+                // ),
                 const SizedBox(
                   height: AppSize.s40,
                 ),
-                StreamBuilder<bool>(
-                    stream: _loginViewModel.outAreInputsValid,
-                    builder: (context, snapshot) => SizedBox(
-                          height: AppSize.s40,
-                          width: double.infinity,
-                          child: ElevatedButton(
-                              onPressed: (snapshot.data ?? false)
-                                  ? () {
-                                      _loginViewModel.login();
-                                    }
-                                  : null,
-                              child: const Text(
-                                AppStrings.login,
-                              )),
-                        )),
+                customElevatedButton(
+                  stream: _loginViewModel.outAreInputsValid,
+                  text: AppStrings.login,
+                  onPressed: () {
+                    _loginViewModel.login();
+                  },
+                ),
                 const SizedBox(
                   height: AppSize.s8,
                 ),
@@ -154,8 +148,10 @@ class _LogInViewState extends State<LogInView> {
                   children: [
                     TextButton(
                       onPressed: () {
-                        Navigator.pushReplacementNamed(
-                            context, Routes.forgotPasswordScreen);
+                        Navigator.pushNamed(
+                          context,
+                          Routes.forgotPasswordScreen,
+                        );
                       },
                       child: Text(
                         AppStrings.forgetPassword,
@@ -164,8 +160,10 @@ class _LogInViewState extends State<LogInView> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushReplacementNamed(
-                            context, Routes.registerScreen);
+                        Navigator.pushNamed(
+                          context,
+                          Routes.registerScreen,
+                        );
                       },
                       child: Text(
                         AppStrings.register,
