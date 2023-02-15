@@ -90,14 +90,14 @@ extension StateFlowExtension on StateFlow {
           dismissDialog(context);
           if (getStateRenderType() == StateRenderType.popupLoadingState) {
             // popup show
-            showPopup(context, getStateRenderType(), getMessage());
+            showPopup(context, getStateRenderType(), getMessage(),retryAction);
             //return content screen
             return contentScreenWidget;
           } else {
             //return full screen loading state
             return StateRenderer(
               stateRenderType: StateRenderType.fullScreenLoadingState,
-              retryAction: () {},
+              retryAction: retryAction,
             );
           }
         }
@@ -105,12 +105,12 @@ extension StateFlowExtension on StateFlow {
         {
           dismissDialog(context);
           if (getStateRenderType() == StateRenderType.popupErrorState) {
-            showPopup(context, getStateRenderType(), getMessage());
+            showPopup(context, getStateRenderType(), getMessage(),retryAction);
             return contentScreenWidget;
           } else {
             return StateRenderer(
               stateRenderType: StateRenderType.fullScreenErrorState,
-              retryAction: () {},
+              retryAction:retryAction,
             );
           }
         }
@@ -124,7 +124,7 @@ extension StateFlowExtension on StateFlow {
         }
       case SuccessState:{
         dismissDialog(context);
-        showPopup(context, StateRenderType.popupSuccessState, getMessage());
+        showPopup(context, StateRenderType.popupSuccessState, getMessage(),retryAction);
         return contentScreenWidget;
       }
       default:
@@ -134,13 +134,13 @@ extension StateFlowExtension on StateFlow {
   }
 
   showPopup(
-      BuildContext context, StateRenderType stateRenderType, String message) {
+      BuildContext context, StateRenderType stateRenderType, String message,Function retryAction) {
     WidgetsBinding.instance.addPostFrameCallback((_) => showDialog(
         context: context,
         builder: (BuildContext context) => StateRenderer(
             stateRenderType: stateRenderType,
             message: message,
-            retryAction: () {})));
+            retryAction: retryAction)));
   }
 
   // for check if there dialog message of not

@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:tut_app/data/network/app_api.dart';
 import 'package:tut_app/data/network/requests.dart';
@@ -12,6 +11,9 @@ abstract class RemoteDataSource {
   Future<AuthenticationResponse> registerResponse(
       RegisterRequest registerRequest,
       );
+  Future<HomeResponse>homeResponse();
+  Future<StoresDetailsResponse>storeDetailsResponse();
+
 }
 
 class RemoteDataSourceImpl extends RemoteDataSource {
@@ -43,5 +45,13 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       registerRequest.userName,
       registerRequest.phone,
     );
+  }
+  @override
+  Future<HomeResponse> homeResponse()async {
+    return await _appServicesClient.home();
+  }
+  @override
+  Future<StoresDetailsResponse> storeDetailsResponse()async {
+    return await _appServicesClient.getStoreDetails();
   }
 }

@@ -3,12 +3,12 @@ import 'package:tut_app/app/di.dart';
 import 'package:tut_app/presentation/forgot_password/view/forgot_password_view.dart';
 import 'package:tut_app/presentation/login/view/login_view.dart';
 import 'package:tut_app/presentation/main/main_view.dart';
+import 'package:tut_app/presentation/main/pages/setting/view/setting_view.dart';
 import 'package:tut_app/presentation/on_boarding/view/on_boarding_view.dart';
 import 'package:tut_app/presentation/register/view/register_view.dart';
 import 'package:tut_app/presentation/resources/string_manager.dart';
-import 'package:tut_app/presentation/setting/setting_view.dart';
 import 'package:tut_app/presentation/splash/splash_view.dart';
-import 'package:tut_app/presentation/store_details/store_details_view.dart';
+import 'package:tut_app/presentation/store_details/view/store_details_view.dart';
 
 class Routes {
   static const String splashScreen = "/";
@@ -27,7 +27,10 @@ class RouteGenerator {
       case Routes.splashScreen:
         return MaterialPageRoute(builder: (_) => const SplashView());
       case Routes.onBoardingScreen:
-        return MaterialPageRoute(builder: (_) => const OnBoardingView());
+        return MaterialPageRoute(builder: (_) {
+          initOnBoardingModule();
+          return const OnBoardingView();
+        });
       case Routes.loginScreen:
         return MaterialPageRoute(
           builder: (_) {
@@ -50,11 +53,16 @@ class RouteGenerator {
           },
         );
       case Routes.mainScreen:
-        return MaterialPageRoute(builder: (_) => const MainView());
+        return MaterialPageRoute(builder: (_) {
+          initHomeModule();
+          return const MainView();
+        });
       case Routes.settingScreen:
         return MaterialPageRoute(builder: (_) => const SettingView());
       case Routes.storeDetailsScreen:
-        return MaterialPageRoute(builder: (_) => const StoreDetailsView());
+        return MaterialPageRoute(builder: (_) {
+          initStoreDetailsModule();
+          return const StoreDetailsView();});
       default:
         return unDefinedRoute();
     }

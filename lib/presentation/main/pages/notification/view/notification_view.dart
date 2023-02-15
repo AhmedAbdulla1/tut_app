@@ -10,7 +10,7 @@ class NotificationView extends StatefulWidget {
 class _NotificationViewState extends State<NotificationView> {
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return  Center(
       child: Text('notifications'),
     );
   }

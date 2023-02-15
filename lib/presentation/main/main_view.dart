@@ -4,7 +4,7 @@ import 'package:tut_app/presentation/resources/string_manager.dart';
 
 import 'pages/home/view/home_view.dart';
 import 'pages/notification/view/notification_view.dart';
-import 'pages/search/view/search_veiw.dart';
+import 'pages/search/view/search_view.dart';
 import 'pages/setting/view/setting_view.dart';
 
 class MainView extends StatefulWidget {

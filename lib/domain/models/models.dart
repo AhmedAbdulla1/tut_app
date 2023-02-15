@@ -59,8 +59,8 @@ class Home {
 }
 
 class Data {
-  List<Service> services;
-  List<Banner> banners;
+  List<Service>? services;
+  List<Banners> banners;
   List<Stores> stores;
 
   Data({
@@ -82,13 +82,13 @@ class Service {
   });
 }
 
-class Banner {
-  int id;
-  String link;
-  String title;
-  String image;
+class Banners {
+  int ?id;
+  String? link;
+  String ?title;
+  String ?image;
 
-  Banner({
+  Banners({
     required this.id,
     required this.link,
     required this.title,
@@ -106,4 +106,21 @@ class Stores {
     required this.title,
     required this.image,
   });
+}
+class StoresDetails{
+  int id;
+  String title;
+  String image;
+  String service;
+  String details;
+  String about;
+  StoresDetails({
+    required this.id,
+    required this.image,
+    required this.title,
+    required this.details,
+    required this.service,
+    required this.about,
+});
+
 }

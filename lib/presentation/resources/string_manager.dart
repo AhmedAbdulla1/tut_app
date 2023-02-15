@@ -40,5 +40,15 @@ class AppStrings {
   static const notification= 'Notification';
   static const search= 'Search';
   static const setting = 'Setting';
+  static const services='Services';
+  static const stores='Stores';
+  static const details='Details';
+  static const storeDetails='Store Details';
+  static const about='About Store';
+  static const String changeLanguage = "Change Language";
+  static const String contactUs = "Contact Us";
+  static const String inviteYourFriends = "Invite Your Friends";
+  static const String logout = "Logout";
+
 
 }

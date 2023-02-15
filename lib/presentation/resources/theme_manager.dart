@@ -61,13 +61,23 @@ ThemeData getApplicationTheme() {
         color: ColorManager.darkGrey,
         fontSize: FontSize.s17,
       ),
-      headlineMedium:
-          getMediumStyle(color: ColorManager.lightGrey, fontSize: FontSize.s15),
+      headlineMedium: getMediumStyle(
+        color: ColorManager.lightGrey,
+        fontSize: FontSize.s15,
+      ),
       bodyLarge: getRegularStyle(
         color: ColorManager.grey1,
       ),
       bodySmall: getRegularStyle(
         color: ColorManager.grey,
+      ),
+      labelSmall: getBoldStyle(
+        color: ColorManager.primary,
+        fontSize: FontSize.s12,
+      ),
+      labelMedium: getBoldStyle(
+        color: ColorManager.primary,
+        fontSize: FontSize.s18,
       ),
     ),
     //input decoration theme

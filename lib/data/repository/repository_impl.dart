@@ -1,18 +1,23 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:tut_app/data/data_source/local_data_source.dart';
 import 'package:tut_app/data/data_source/remote_data_source.dart';
+import 'package:tut_app/data/mapper/mapper.dart';
 import 'package:tut_app/data/network/error_handler.dart';
 import 'package:tut_app/data/network/failure.dart';
 import 'package:tut_app/data/network/network_info.dart';
 import 'package:tut_app/data/network/requests.dart';
 import 'package:tut_app/data/response/responses.dart';
+import 'package:tut_app/domain/models/models.dart';
 import 'package:tut_app/domain/repository/repository.dart';
 
 class RepositoryImpl implements Repository {
+  final LocalDataSource _localDataSource;
   final RemoteDataSource _remoteDataSource;
   final NetWorkInfo _networkInfo;
 
   RepositoryImpl(
+    this._localDataSource,
     this._remoteDataSource,
     this._networkInfo,
   );
@@ -134,6 +139,82 @@ class RepositoryImpl implements Repository {
       return Left(
         DataSource.noInternetConnection.getFailure(),
       );
+    }
+  }
+
+  @override
+  Future<Either<Failure, Home>> home() async {
+    try {
+      final response = await _localDataSource.homeResponse();
+      return Right(
+        response.toDomain(),
+      );
+    } catch (cacheError) {
+      if (await _networkInfo.isConnected) {
+        final HomeResponse response = await _remoteDataSource.homeResponse();
+        try {
+          if (response.status == ApiInternalStatus.success) {
+            _localDataSource.saveHomeToCache(response);
+            return Right(
+              response.toDomain(),
+            );
+          } else {
+            return Left(
+              Failure(
+                code: ApiInternalStatus.failure,
+                message: response.message ?? ResponseMessage.customDefault,
+              ),
+            );
+          }
+        } catch (error) {
+          return Left(
+            ErrorHandler.handle(error).failure,
+          );
+        }
+      } else {
+        return Left(
+          DataSource.noInternetConnection.getFailure(),
+        );
+      }
+    }
+  }
+
+  @override
+  Future<Either<Failure, StoresDetails>> storeDetails() async {
+    try {
+      final response = await _localDataSource.storeDetailsResponse();
+      return Right(
+        response.toDomain(),
+      );
+    } catch (cacheError) {
+      print(cacheError);
+      if (await _networkInfo.isConnected) {
+        final StoresDetailsResponse response =
+            await _remoteDataSource.storeDetailsResponse();
+        try {
+          if (response.status == ApiInternalStatus.success) {
+            _localDataSource.saveStoreDetailsToCache(response);
+            return Right(
+              response.toDomain(),
+            );
+          } else {
+            return Left(
+              Failure(
+                code: ApiInternalStatus.failure,
+                message: response.message ?? ResponseMessage.customDefault,
+              ),
+            );
+          }
+        } catch (error) {
+          return Left(
+            ErrorHandler.handle(error).failure,
+          );
+        }
+      } else {
+        return Left(
+          DataSource.noInternetConnection.getFailure(),
+        );
+      }
     }
   }
 }

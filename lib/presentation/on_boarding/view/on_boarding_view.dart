@@ -23,7 +23,7 @@ class OnBoardingView extends StatefulWidget {
 
 class OnBoardingViewState extends State<OnBoardingView> {
   final PageController _pageController = PageController();
-  final OnBoardingViewModel _viewModel = OnBoardingViewModel();
+  final OnBoardingViewModel _viewModel = instance<OnBoardingViewModel>();
   final AppPreferences _appPreferences = instance<AppPreferences>();
 
   _bind() {
@@ -120,7 +120,7 @@ class OnBoardingViewState extends State<OnBoardingView> {
                 // go to previous slide
                 _pageController.animateToPage(_viewModel.goPrevious(),
                     duration:
-                        Duration(milliseconds: AppConstant.sliderAnimationTime),
+                        const Duration(milliseconds: AppConstant.sliderAnimationTime),
                     curve: Curves.easeIn);
               },
             ),
@@ -145,7 +145,7 @@ class OnBoardingViewState extends State<OnBoardingView> {
                 onTap: () {
                   // go to previous slide
                   _pageController.animateToPage(_viewModel.goNext(),
-                      duration: Duration(
+                      duration:const  Duration(
                           milliseconds: AppConstant.sliderAnimationTime),
                       curve: Curves.bounceInOut);
                 }),

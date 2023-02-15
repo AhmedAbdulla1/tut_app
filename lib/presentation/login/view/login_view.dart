@@ -74,7 +74,9 @@ class _LogInViewState extends State<LogInView> {
             snapshot.data?.getScreenWidget(
               context,
               _getContent(),
-              () {},
+              () {
+                _loginViewModel.login();
+              },
             ) ??
             _getContent(),
       ),

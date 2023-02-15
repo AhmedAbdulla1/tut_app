@@ -1,9 +1,10 @@
-import 'package:shared_preferences/shared_preferences.dart' ;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tut_app/presentation/resources/language_manager.dart';
 
 const String prefsKeyLang = "PrefsKeyLang";
-const String pressKeyOnBoardingScreen ='PressKeyOnBoardingScreen';
-const String pressKeyLoginScreen ='PressKeyLoginScreen';
+const String pressKeyOnBoardingScreen = 'PressKeyOnBoardingScreen';
+const String pressKeyLoginScreen = 'PressKeyLoginScreen';
+
 class AppPreferences {
   final SharedPreferences _sharedPreferences;
 
@@ -18,22 +19,26 @@ class AppPreferences {
       return LanguageType.english.getValue();
     }
   }
+
   // onBoarding
   Future<void> setPressKeyOnBoardingScreen() async {
     _sharedPreferences.setBool(pressKeyOnBoardingScreen, true);
-
   }
-  Future<bool> isPressKeyOnBoardingScreen() async {
-   return _sharedPreferences.getBool(pressKeyOnBoardingScreen)?? false;
 
+  Future<bool> isPressKeyOnBoardingScreen() async {
+    return _sharedPreferences.getBool(pressKeyOnBoardingScreen) ?? false;
   }
 
   //login
-  Future<void> setPressKeyLoginScreen()async{
+  Future<void> setPressKeyLoginScreen() async {
     _sharedPreferences.setBool(pressKeyLoginScreen, true);
   }
-  Future<bool> isPressKeyLoginScreen()async{
+
+  Future<bool> isPressKeyLoginScreen() async {
     return _sharedPreferences.getBool(pressKeyLoginScreen) ?? false;
   }
 
+  Future<void> logout() {
+    return _sharedPreferences.remove(pressKeyLoginScreen);
+  }
 }

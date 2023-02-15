@@ -118,11 +118,13 @@ class StateRenderer extends StatelessWidget {
   }
 
   Widget _getItemColumn(List<Widget> children) {
-    return Padding(
-      padding: const EdgeInsets.all(AppPadding.p8),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: children,
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(AppPadding.p8),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: children,
+        ),
       ),
     );
   }
