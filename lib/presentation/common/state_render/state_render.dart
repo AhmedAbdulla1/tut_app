@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tut_app/presentation/resources/assets_manager.dart';
@@ -50,7 +51,7 @@ class StateRenderer extends StatelessWidget {
           [
             _getAnimatedImage(JsonAssets.error),
             _getMessage(),
-            _getRetryButton(AppStrings.ok),
+            _getRetryButton(AppStrings.ok.tr()),
           ],
         );
       case StateRenderType.popupLoadingState:
@@ -64,13 +65,13 @@ class StateRenderer extends StatelessWidget {
         return _getPopUpDialog([
           _getAnimatedImage(JsonAssets.success),
           _getMessage(),
-          _getRetryButton(AppStrings.ok)
+          _getRetryButton(AppStrings.ok.tr())
         ]);
       case StateRenderType.fullScreenErrorState:
         return _getItemColumn([
           _getAnimatedImage(JsonAssets.error),
           _getMessage(),
-          _getRetryButton(AppStrings.retry),
+          _getRetryButton(AppStrings.retry.tr()),
         ]);
       case StateRenderType.fullScreenLoadingState:
         return _getItemColumn(
@@ -151,7 +152,7 @@ class StateRenderer extends StatelessWidget {
         width: double.infinity,
         child: ElevatedButton(
           onPressed: () {
-            if (title == AppStrings.retry) {
+            if (title == AppStrings.retry.tr()) {
               //call retry function
               retryAction.call();
             } else {

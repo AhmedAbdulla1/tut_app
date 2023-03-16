@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 import 'package:tut_app/presentation/resources/string_manager.dart';
@@ -42,8 +43,8 @@ required  TextEditingController textEditingController,
             !(snapshot.snapshot2.data?? true ) ? Icons.visibility : Icons.visibility_off,
           ),
         ),
-        hintText: AppStrings.password,
-        errorText: (snapshot.snapshot1.data ?? true) ? null : AppStrings.passwordError,
+        hintText: AppStrings.password.tr(),
+        errorText: (snapshot.snapshot1.data ?? true) ? null : AppStrings.passwordError.tr(),
       ),
       obscureText: snapshot.snapshot2.data??true,
     ),

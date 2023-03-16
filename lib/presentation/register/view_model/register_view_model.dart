@@ -92,13 +92,13 @@ class RegisterViewModel extends BaseViewModel
         profilePicture: registerObject.profilePicture,
       ),
     ))
-        .fold(
-            (failure) => inputState.add(
-                  ErrorState(
-                    stateRenderType: StateRenderType.popupErrorState,
-                    message: failure.message,
-                  ),
-                ), (data) {
+        .fold((failure) {
+          print(failure.message);
+      inputState.add(ErrorState(
+        stateRenderType: StateRenderType.popupErrorState,
+        message: failure.message,
+      ));
+    }, (data) {
       inputState.add(
         ContentState(),
       );
@@ -207,8 +207,8 @@ class RegisterViewModel extends BaseViewModel
       _emailStreamController.stream.map((email) => _isEmailValid(email));
 
   @override
-  Stream<bool> get outIsPhoneValid => _phoneStreamController.stream
-      .map((password) => _isPhoneValid(password));
+  Stream<bool> get outIsPhoneValid =>
+      _phoneStreamController.stream.map((password) => _isPhoneValid(password));
 
   @override
   Stream<bool> get outIsPasswordValid => _passwordStreamController.stream

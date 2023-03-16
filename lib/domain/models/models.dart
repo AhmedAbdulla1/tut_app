@@ -14,6 +14,8 @@ class SliderViewObject {
   SliderViewObject(this.sliderObject, this.numOfSlides, this.currentIndex);
 }
 
+
+
 class Authentication {
   Customer? customer;
   Contact? contact;

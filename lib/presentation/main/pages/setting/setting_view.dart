@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tut_app/app/app_prefs.dart';
 import 'package:tut_app/app/di.dart';
@@ -27,7 +29,7 @@ class SettingViewState extends State<SettingView> {
         children: [
           ListTile(
             leading: SvgPicture.asset(ImageAssets.changeLangIc),
-            title: Text(AppStrings.changeLanguage,
+            title: Text(AppStrings.changeLanguage.tr(),
                 style: Theme.of(context).textTheme.bodyLarge),
             trailing: SvgPicture.asset(
               ImageAssets.rightArrowSettingsIc,
@@ -38,7 +40,7 @@ class SettingViewState extends State<SettingView> {
           ),
           ListTile(
             leading: SvgPicture.asset(ImageAssets.contactUsIc),
-            title: Text(AppStrings.contactUs,
+            title: Text(AppStrings.contactUs.tr(),
                 style: Theme.of(context).textTheme.bodyLarge),
             trailing: SvgPicture.asset(
               ImageAssets.rightArrowSettingsIc,
@@ -49,7 +51,7 @@ class SettingViewState extends State<SettingView> {
           ),
           ListTile(
             leading: SvgPicture.asset(ImageAssets.inviteFriendsIc),
-            title: Text(AppStrings.inviteYourFriends,
+            title: Text(AppStrings.inviteYourFriends.tr(),
                 style: Theme.of(context).textTheme.bodyLarge),
             trailing: SvgPicture.asset(
               ImageAssets.rightArrowSettingsIc,
@@ -60,7 +62,7 @@ class SettingViewState extends State<SettingView> {
           ),
           ListTile(
             leading: SvgPicture.asset(ImageAssets.logoutIc),
-            title: Text(AppStrings.logout,
+            title: Text(AppStrings.logout.tr(),
                 style: Theme.of(context).textTheme.bodyLarge),
             trailing: SvgPicture.asset(ImageAssets.rightArrowSettingsIc),
             onTap: () {
@@ -72,13 +74,15 @@ class SettingViewState extends State<SettingView> {
     );
   }
 
-  //
+
   // bool isRtl() {
   //
   // }
 
   _changeLanguage() {
-    // i will implement it later
+      // i will implement it later
+    _appPreferences.changeAppLanguage();
+    Phoenix.rebirth(context);
   }
 
   _contactUs() {

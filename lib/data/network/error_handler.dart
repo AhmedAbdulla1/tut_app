@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:tut_app/presentation/resources/string_manager.dart';
 
 import 'failure.dart';
 
@@ -7,7 +9,6 @@ class ErrorHandler implements Exception {
 
   ErrorHandler.handle(dynamic error) {
     if (error is DioError) {
-
       failure = _handlerError(error);
     } else {
       failure = DataSource.customDefault.getFailure();
@@ -156,30 +157,28 @@ class ResponseCode {
 }
 
 class ResponseMessage {
-  static const String success = "success"; // success with data
-  static const String noContent =
-      "No Content"; // success with no data (no content)
-  static const String badRequest =
-      "Bad Request ,try again later"; // failure, API rejected request
-  static const String unAuthorised =
-      "user is unAuthorised"; // failure, user is not authorised
-  static const String forbidden =
-      "forbidden Request ,try again later"; //  failure, API rejected request
-  static const String notFound =
-      "UserName or Password is failure"; //  failure, not found
-  static const String internalServerError =
-      "Some thing want wrong ,try again later"; // failure, crash in server side
-
-  static const String connectTimeout = "Time out error, Try again later";
-  static const String cancel = "Request was cancelled, Try again later";
-  static const String receiveTimeout = "Time out error, Try again later";
-  static const String sendTimeout = "Time out error, Try again later";
-  static const String cacheError = "Cache error, Try again later";
-  static const String noInternetConnection =
-      "Please check your internet connection";
-  static const String customDefault = "Some thing went wrong, Try again later";
+  static String success = AppStrings.success.tr(); // success with data
+  static String noContent =
+      AppStrings.success.tr(); // success with no data (no content)
+  static String badRequest =
+      AppStrings.badRequestError.tr(); // failure, API rejected request
+  static String unAuthorised =
+      AppStrings.unauthorizedError.tr(); // failure, user is not authorised
+  static String forbidden =
+      AppStrings.forbiddenError.tr(); //  failure, API rejected request
+  static String notFound = AppStrings.notFoundError.tr(); //  failure, not found
+  static String internalServerError =
+      AppStrings.internalServerError.tr(); // failure, crash in server side
+  static String connectTimeout = AppStrings.timeoutError.tr();
+  static String cancel = AppStrings.defaultError.tr();
+  static String receiveTimeout = AppStrings.timeoutError.tr();
+  static String sendTimeout = AppStrings.timeoutError.tr();
+  static String cacheError = AppStrings.cacheError.tr();
+  static String noInternetConnection = AppStrings.noInternetError.tr();
+  static String customDefault = AppStrings.defaultError.tr();
 }
-class ApiInternalStatus{
+
+class ApiInternalStatus {
   static const int success = 0;
   static const int failure = 1;
 }

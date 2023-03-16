@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -134,8 +135,8 @@ class _RegisterViewState extends State<RegisterView> {
                   stream: _registerViewModel.outIsUserNameValid,
                   textEditingController: _usernameController,
                   textInputType: TextInputType.name,
-                  hintText: AppStrings.username,
-                  errorText: AppStrings.usernameError,
+                  hintText: AppStrings.username.tr(),
+                  errorText: AppStrings.usernameError.tr(),
                 ),
                 const SizedBox(
                   height: AppSize.s8,
@@ -178,8 +179,8 @@ class _RegisterViewState extends State<RegisterView> {
                         stream: _registerViewModel.outIsPhoneValid,
                         textEditingController: _phoneController,
                         textInputType: TextInputType.phone,
-                        hintText: AppStrings.phone,
-                        errorText: AppStrings.phoneError,
+                        hintText: AppStrings.phone.tr(),
+                        errorText: AppStrings.phoneError.tr(),
                       ),
                     ),
                   ],
@@ -191,8 +192,8 @@ class _RegisterViewState extends State<RegisterView> {
                 customTextFormField(
                   stream: _registerViewModel.outIsEmailValid,
                   textEditingController: _emailController,
-                  hintText: AppStrings.email,
-                  errorText: AppStrings.emailError,
+                  hintText: AppStrings.email.tr(),
+                  errorText: AppStrings.emailError.tr(),
                 ),
                 const SizedBox(
                   height: AppSize.s8,
@@ -234,7 +235,7 @@ class _RegisterViewState extends State<RegisterView> {
                       children: [
                         Expanded(
                           child: Text(
-                            AppStrings.profilePicture,
+                            AppStrings.profilePicture.tr(),
                             style: getRegularStyle(
                               color: ColorManager.primary,
                               fontSize: FontSize.s16,
@@ -254,7 +255,7 @@ class _RegisterViewState extends State<RegisterView> {
                 // انا عامل ستريم عشان الحالة بتتغير علي حسب البيانات الموجوده في الخانات
                 customElevatedButton(
                   stream: _registerViewModel.outAreInputsValid,
-                  text: AppStrings.signup,
+                  text: AppStrings.signup.tr(),
                   onPressed: () {
                     _registerViewModel.register();
                   },
@@ -267,7 +268,7 @@ class _RegisterViewState extends State<RegisterView> {
                     Navigator.pushReplacementNamed(context, Routes.loginScreen);
                   },
                   child: Text(
-                    AppStrings.reLogin,
+                    AppStrings.reLogin.tr(),
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
@@ -290,7 +291,7 @@ class _RegisterViewState extends State<RegisterView> {
               ListTile(
                 trailing: const Icon(Icons.arrow_forward),
                 leading: const Icon(Icons.camera),
-                title: const Text(AppStrings.photoGallery),
+                title:  Text(AppStrings.photoGallery.tr()),
                 onTap: () {
                   _imageFromGallery();
                   Navigator.of(context).pop();
@@ -299,7 +300,7 @@ class _RegisterViewState extends State<RegisterView> {
               ListTile(
                 trailing: const Icon(Icons.arrow_forward),
                 leading: const Icon(Icons.camera_alt_outlined),
-                title: const Text(AppStrings.photoCamera),
+                title:  Text(AppStrings.photoCamera.tr()),
                 onTap: () {
                   _imageFromCamera();
                   Navigator.of(context).pop();
@@ -321,6 +322,7 @@ class _RegisterViewState extends State<RegisterView> {
     var image = await _imagePicker.pickImage(source: ImageSource.camera);
     _registerViewModel.setProfilePicture(File(image?.path ?? ""));
   }
+
   Widget _imagePicketByUser(File? image) {
     if (image != null && image.path.isNotEmpty) {
       // return image

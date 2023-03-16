@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:tut_app/app/app_prefs.dart';
@@ -105,8 +106,8 @@ class _LogInViewState extends State<LogInView> {
                 customTextFormField(
                   stream: _loginViewModel.outIsUserNameValid,
                   textEditingController: _emailController,
-                  hintText: AppStrings.email,
-                  errorText: AppStrings.emailError,
+                  hintText: AppStrings.email.tr(),
+                  errorText: AppStrings.emailError.tr(),
                 ),
                 const SizedBox(
                   height: AppSize.s8,
@@ -120,25 +121,13 @@ class _LogInViewState extends State<LogInView> {
                     _loginViewModel.setVisibility(isVisible);
                   },
                 ),
-                // StreamBuilder<bool>(
-                //   stream: _loginViewModel.outIsPasswordValid,
-                //   builder: (context, snapshot) => TextFormField(
-                //     keyboardType: TextInputType.visiblePassword,
-                //     controller: _passwordController,
-                //     decoration: InputDecoration(
-                //       hintText: AppStrings.password,
-                //       errorText: (snapshot.data ?? true)
-                //           ? null
-                //           : AppStrings.passwordError,
-                //     ),
-                //   ),
-                // ),
+
                 const SizedBox(
                   height: AppSize.s40,
                 ),
                 customElevatedButton(
                   stream: _loginViewModel.outAreInputsValid,
-                  text: AppStrings.login,
+                  text: AppStrings.login.tr(),
                   onPressed: () {
                     _loginViewModel.login();
                   },
@@ -156,7 +145,7 @@ class _LogInViewState extends State<LogInView> {
                         );
                       },
                       child: Text(
-                        AppStrings.forgetPassword,
+                        AppStrings.forgetPassword.tr(),
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
@@ -168,7 +157,7 @@ class _LogInViewState extends State<LogInView> {
                         );
                       },
                       child: Text(
-                        AppStrings.register,
+                        AppStrings.register.tr(),
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),

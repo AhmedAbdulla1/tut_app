@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:tut_app/presentation/resources/color_manager.dart';
 import 'package:tut_app/presentation/resources/string_manager.dart';
@@ -5,7 +6,7 @@ import 'package:tut_app/presentation/resources/string_manager.dart';
 import 'pages/home/view/home_view.dart';
 import 'pages/notification/view/notification_view.dart';
 import 'pages/search/view/search_view.dart';
-import 'pages/setting/view/setting_view.dart';
+import 'pages/setting/setting_view.dart';
 
 class MainView extends StatefulWidget {
   const MainView({Key? key}) : super(key: key);
@@ -22,10 +23,10 @@ class _MainViewState extends State<MainView> {
     const SettingView(),
   ];
   List<String> titles = [
-    AppStrings.home,
-    AppStrings.search,
-    AppStrings.notification,
-    AppStrings.setting,
+    AppStrings.home.tr(),
+    AppStrings.search.tr(),
+    AppStrings.notification.tr(),
+    AppStrings.setting.tr(),
   ];
   int _currentIndex = 0;
 

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:tut_app/app/di.dart';
 import 'package:tut_app/presentation/common/state_render/state_renderer_imp.dart';
@@ -35,8 +36,8 @@ class _StoreDetailsViewState extends State<StoreDetailsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          AppStrings.storeDetails,
+        title:  Text(
+          AppStrings.storeDetails.tr(),
         ),
       ),
       body: StreamBuilder<StateFlow>(
@@ -64,11 +65,11 @@ class _StoreDetailsViewState extends State<StoreDetailsView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _getImage(snapshot.data!.image),
-                  _getSection(AppStrings.details),
+                  _getSection(AppStrings.details.tr()),
                   _getText(snapshot.data!.details),
-                  _getSection(AppStrings.services),
+                  _getSection(AppStrings.services.tr()),
                   _getText(snapshot.data!.service),
-                  _getSection(AppStrings.about),
+                  _getSection(AppStrings.about.tr()),
                   _getText(snapshot.data!.about),
                 ],
               );

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:tut_app/app/app_prefs.dart';
@@ -98,14 +99,14 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                 customTextFormField(
                     stream: _forgotPasswordViewModel.outIsEmailValid,
                     textEditingController: _emailController,
-                    hintText: AppStrings.email,
-                    errorText: AppStrings.emailError),
+                    hintText: AppStrings.email.tr(),
+                    errorText: AppStrings.emailError.tr()),
                 const SizedBox(
                   height: AppSize.s28,
                 ),
                 customElevatedButton(
                     stream: _forgotPasswordViewModel.outIsEmailValid,
-                    text: AppStrings.resetPassword,
+                    text: AppStrings.resetPassword.tr(),
                     onPressed: () {
                       _forgotPasswordViewModel.forgotPassword();
                     }),
@@ -116,7 +117,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      AppStrings.didnotRecieve,
+                      AppStrings.didnotRecieve.tr(),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     TextButton(
@@ -124,7 +125,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                         _forgotPasswordViewModel.forgotPassword();
                       },
                       child: Text(
-                        AppStrings.resend,
+                        AppStrings.resend.tr(),
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),

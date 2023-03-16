@@ -1,9 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:tut_app/app/di.dart';
 import 'package:tut_app/presentation/forgot_password/view/forgot_password_view.dart';
 import 'package:tut_app/presentation/login/view/login_view.dart';
 import 'package:tut_app/presentation/main/main_view.dart';
-import 'package:tut_app/presentation/main/pages/setting/view/setting_view.dart';
+import 'package:tut_app/presentation/main/pages/setting/setting_view.dart';
 import 'package:tut_app/presentation/on_boarding/view/on_boarding_view.dart';
 import 'package:tut_app/presentation/register/view/register_view.dart';
 import 'package:tut_app/presentation/resources/string_manager.dart';
@@ -72,13 +73,13 @@ class RouteGenerator {
     return MaterialPageRoute(
       builder: (_) => Scaffold(
         appBar: AppBar(
-          title: const Text(
-            AppStrings.noRouteFound,
+          title:  Text(
+            AppStrings.noRouteFound.tr(),
           ),
         ),
-        body: const Center(
+        body:  Center(
           child: Text(
-            AppStrings.noRouteFound,
+            AppStrings.noRouteFound.tr(),
           ),
         ),
       ),
